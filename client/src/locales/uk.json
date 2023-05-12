@@ -9,6 +9,7 @@
   "confirmPassword": "Підтвердіть пароль",
   "confirmPasswordError": "Паролі повинні співпадати",
   "createNeighborhood": "Створити сусідство",
+  "createRecipe": "Створити рецепт",
   "dontHaveAccount": "Не маєте облікового запису?",
   "firstName": "Ім'я",
   "incorrectValue": "Некоректне значення",
@@ -17,13 +18,12 @@
   "lessThan": "Не більше {{value}} символів",
   "login": "Логін",
   "loginInUse": "Логін вже використовується",
+  "main": "Головна",
   "mainPage": "Головна",
-  "memberRequestAlreadyHaveBeenSent": "Запит на приєднання вже було відправлено",
-  "memberRequestSent": "Запит на приєднання було надіслано",
-  "members": "{{value}} учасник(-ів)",
-  "neighborhoods": "Сусідства",
   "notifications": "Повідомлення",
   "password": "Пароль",
+  "publish": "Опублікувати",
+  "recipes": "Рецепти",
   "requestAlreadySent": "Заявку вже надіслано",
   "requiredField": "Обов'язкове поле",
   "search": "Пошук",
@@ -33,6 +33,5 @@
   "signUpAction": "Зареєструватися.",
   "signUpTitle": "Заповніть свої дані нижче та зареєструйтесь",
   "smtWntWrng": "Щось пішло не так",
-  "wrngLoginPassword": "Неправильний логін або пароль",
-  "yourNeighborhoods": "Ваші сусідства"
+  "wrngLoginPassword": "Неправильний логін або пароль"
 }

@@ -1,15 +1,13 @@
 import styled from 'styled-components';
 
 export const LayoutWrapper = styled.div`
-	max-width: 1440px;
-	padding: 0 15px;
-	margin: 0 auto;
+
 `;
 
 export const LayoutMainContent = styled.div`
-	display: flex;
-  position: relative;
-	flex-grow: 1;
+  max-width: 1440px;
+  padding: 0 15px;
+  margin: 0 auto;
 `;
 
 export const LayoutOutletWrapper = styled.div`

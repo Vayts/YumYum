@@ -1,12 +1,15 @@
 import React from 'react';
-import { LayoutWrapper } from '@hoc/Layout/style';
+import { LayoutMainContent, LayoutWrapper } from '@hoc/Layout/style';
 import { Outlet } from 'react-router-dom';
+import { Header } from '@hoc/Header/Header';
 
 export const Layout: React.FC = () => {
-	
 	return (
 		<LayoutWrapper>
-			<Outlet/>
+			<Header/>
+			<LayoutMainContent>
+				<Outlet/>
+			</LayoutMainContent>
 		</LayoutWrapper>
 	);
 };

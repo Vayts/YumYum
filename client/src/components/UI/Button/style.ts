@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components';
 import { IButtonStyle } from './types';
 
 export const ButtonItem = styled.button<IButtonStyle>`
-  height: ${({ height = '30px' }) => height};
+  height: ${({ height = 'auto' }) => height};
   margin: ${({ margin = '5px 10px' }) => margin};
   padding: ${({ padding = '7px 20px' }) => padding};
   font-size: ${({ fz = 16 }) => `${fz}px`};
