@@ -9,6 +9,7 @@
   "confirmPassword": "Confirm Password",
   "confirmPasswordError": "Password and confirm password must match",
   "createNeighborhood": "Create neighborhood",
+  "createRecipe": "Create a recipe",
   "dontHaveAccount": "Don't have an account yet?",
   "firstName": "First Name",
   "incorrectValue": "Incorrect Value",
@@ -17,13 +18,12 @@
   "lessThan": "Must be less than {{value}} characters",
   "login": "Login",
   "loginInUse": "Login is already in use",
+  "main": "Main",
   "mainPage": "Main",
-  "memberRequestAlreadyHaveBeenSent": "Member request has already been sent",
-  "memberRequestSent": "Member request has been sent ",
-  "members": "{{value}} member(-s)",
-  "neighborhoods": "Neighborhoods",
   "notifications": "Notifications",
   "password": "Password",
+  "publish": "Publish",
+  "recipes": "Recipes",
   "requestAlreadySent": "Request already sent",
   "requiredField": "Required Field",
   "search": "Search",
@@ -33,6 +33,5 @@
   "signUpAction": "Sign Up.",
   "signUpTitle": "Fill in your details below and Sign Up",
   "smtWntWrng": "Something went wrong",
-  "wrngLoginPassword": "Wrong Login or Password",
-  "yourNeighborhoods": "Your neighborhoods"
+  "wrngLoginPassword": "Wrong Login or Password"
 }
