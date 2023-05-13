@@ -23,6 +23,8 @@
   "notifications": "Повідомлення",
   "password": "Пароль",
   "publish": "Опублікувати",
+  "recipeDescription": "Опис рецепта",
+  "recipeName": "Назва рецепту",
   "recipes": "Рецепти",
   "requestAlreadySent": "Заявку вже надіслано",
   "requiredField": "Обов'язкове поле",
