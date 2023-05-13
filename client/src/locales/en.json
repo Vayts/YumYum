@@ -23,6 +23,8 @@
   "notifications": "Notifications",
   "password": "Password",
   "publish": "Publish",
+  "recipeDescription": "Recipe description",
+  "recipeName": "Recipe name",
   "recipes": "Recipes",
   "requestAlreadySent": "Request already sent",
   "requiredField": "Required Field",

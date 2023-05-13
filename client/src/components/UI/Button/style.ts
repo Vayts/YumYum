@@ -35,9 +35,13 @@ export const ButtonItem = styled.button<IButtonStyle>`
 		if (styleType === 'transparent') {
 			return css`
         background-color: transparent;
-	      border-color: transparent;
-				box-shadow: none;
-				
+        border-color: #3e3e3e;
+        box-shadow: none;
+        color: #3e3e3e;
+
+        &:hover {
+          background-color: ${({ theme }) => theme.greyLight};
+        }
       `;
 		}
 		return css`

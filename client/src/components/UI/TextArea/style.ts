@@ -1,32 +1,35 @@
 import styled from 'styled-components';
-import { IInputStyle } from '@src/components/UI/Input/types';
+import { ITextAreaStyle } from '@src/components/UI/TextArea/types';
 
-export const InputWrapper = styled.div<IInputStyle>`
+export const TextAreaWrapper = styled.div<ITextAreaStyle>`
 	display: flex;
 	flex-direction: column;
   margin: ${({ margin = '5px 0' }) => margin};
   width: ${({ width = 'auto' }) => width};
   font-size: ${({ fz = 16 }) => `${fz}px`};
+  height: ${({ height = 'auto' }) => height};
 `;
 
-export const InputLabel = styled.label`
+export const TextAreaLabel = styled.label`
 	margin-bottom: 10px;
 	font-size: inherit;
 `;
 
-export const InputElemWrapper = styled.div`
+export const TextAreaElemWrapper = styled.div`
   position: relative;
+  height: 100%;
 `;
 
-export const InputElem = styled.input<IInputStyle>`
-  height: ${({ height = 'auto' }) => height};
-  padding: ${({ padding = '10px 30px 10px 20px' }) => padding};
+export const TextAreaElem = styled.textarea<ITextAreaStyle>`
   font-size: ${({ fz = 16 }) => `${fz}px`};
+  height: 100%;
+  padding: ${({ padding = '10px 30px 10px 20px' }) => padding};
 	width: 100%;
 	border: 1px solid ${({ isValid, theme }) => (isValid ? '#E2E8F0' : theme.dangerColor)};
 	background-color: transparent;
 	border-radius: 5px;
 	transition: all 0.2s;
+	resize: none;
 	
 	&:focus {
 		outline: none;
@@ -36,20 +39,7 @@ export const InputElem = styled.input<IInputStyle>`
 	&::placeholder {
     font-size: ${({ fz = 16 }) => `${fz}px`};
 		color: ${({ theme }) => theme.reverseLight};
-	}
-`;
-
-export const InputSecureIcon = styled.div`
-  position: absolute;
-	transform: translateY(-50%);
-	top: 50%;
-	right: 10px;
-	font-size: 20px;
-	user-select: none;
-	cursor: pointer;
-	color: ${({ theme }) => theme.greyColor};
-	
-	&:active {
-    color: ${({ theme }) => theme.primary};
+		font-family: 'Inter', sans-serif;
+		font-weight: 400;
 	}
 `;

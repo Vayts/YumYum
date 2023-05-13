@@ -24,7 +24,7 @@ export const Input: React.FC<IInput> = (props) => {
 	
 	return (
 		<InputWrapper margin={margin} width={width}>
-			<InputLabel htmlFor={id}>{label}</InputLabel>
+			{label ? <InputLabel htmlFor={id}>{label}</InputLabel> : null}
 			<InputElemWrapper>
 				<InputElem
 					name={name}
