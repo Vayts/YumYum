@@ -21,7 +21,8 @@ export const ModalDialog = styled.div`
   position: relative;
 	min-width: 320px;
 	background-color: ${({ theme }) => theme.componentBg};
-	border-radius: 10px;
+	box-shadow: ${({ theme }) => theme.modalShadow};
+	border-radius: 5px;
 `;
 
 export const ModalClose = styled.span`

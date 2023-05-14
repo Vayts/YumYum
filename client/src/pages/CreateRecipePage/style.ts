@@ -14,6 +14,9 @@ export const CreateRecipeTitle = styled.div`
 
 export const CreateRecipeBlock = styled.div`
 	margin-top: 25px;
+	box-shadow: ${({ theme }) => theme.softShadow};
+	background-color: ${({ theme }) => theme.componentBg};
+	padding: 20px 20px 40px;
 `;
 
 export const CreateRecipeMainInfo = styled.div`
@@ -28,6 +31,11 @@ export const CreateRecipeImg = styled.div`
 
 export const CreateRecipeImgWrapper = styled.div`
   margin-right: 20px;
+	
+	label {
+    width: 450px;
+    height: 281px;
+	}
 `;
 
 export const CreateRecipeMainInputs = styled.div`

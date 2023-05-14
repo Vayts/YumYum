@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom';
 export const HeaderWrapper = styled.div`
 	//border-bottom: 1px solid ${({ theme }) => theme.greyColor};
 	box-shadow: ${({ theme }) => theme.softShadow};
+	background-color: ${({ theme }) => theme.componentBg};
 `;
 
 export const HeaderContent = styled.div`

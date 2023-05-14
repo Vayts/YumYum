@@ -30,6 +30,7 @@ export const TextAreaElem = styled.textarea<ITextAreaStyle>`
 	border-radius: 5px;
 	transition: all 0.2s;
 	resize: none;
+	font-family: 'Inter', sans-serif;
 	
 	&:focus {
 		outline: none;
