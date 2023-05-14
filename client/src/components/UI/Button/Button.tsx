@@ -5,7 +5,6 @@ import { IButton } from '@src/components/UI/Button/types';
 import { ButtonContent, ButtonIcon, ButtonItem, ButtonText } from '@src/components/UI/Button/style';
 
 export const Button: React.FC<IButton> = (props) => {
-	const { t } = useTranslation();
  
 	const {
 		margin,
@@ -34,6 +33,7 @@ export const Button: React.FC<IButton> = (props) => {
 			onClick={(e) => clickHandler(e)}
 			disabled={disabled || isLoading}
 			br={br}
+			type='button'
 		>
 			{isLoading ? <Loader size={15}/> : (
 				<ButtonContent>

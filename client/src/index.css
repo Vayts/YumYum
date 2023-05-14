@@ -4,6 +4,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow: hidden;
+  background-color: #fbfbfb;
 }
 
 code {
@@ -42,6 +43,9 @@ code {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-upload:before {
+  content: "\e907";
+}
 
 .icon-down:before {
   content: "\e900";

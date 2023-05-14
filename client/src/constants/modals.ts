@@ -1,5 +1,5 @@
 export const MODALS = {
-	CREATE: {
-	
-	}
+	RECIPE: {
+		EDIT_PHOTO: 'EDIT_PHOTO',
+	},
 };

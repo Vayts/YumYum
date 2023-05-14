@@ -2,9 +2,11 @@ export interface ICreateRecipeState {
 	isValid: boolean,
 	isLoading: boolean,
 	form: {
-		title: string,
-		description: string,
-		mainPhoto: null | File,
+		mainInfo: {
+			title: string,
+			description: string,
+			mainPhoto: string,
+		}
 		contentBlocks: ICreateRecipeContentBlock[],
 	}
 }

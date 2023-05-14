@@ -12,6 +12,7 @@ export const THEMES = {
 		dangerColor: '#de5757',
 		softShadow: 'rgba(149, 157, 165, 0.1) 0px 8px 24px;',
 		modalShadow: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;',
+		subTxtColor: '#6b6b6b',
 	},
 	dark: {},
 };

@@ -17,6 +17,7 @@
     "prop-types": "^15.8.1",
     "react": "^18.1.0",
     "react-animate-height": "^3.1.0",
+    "react-avatar-editor": "^13.0.0",
     "react-calendar": "^4.0.0",
     "react-circular-progressbar": "^2.1.0",
     "react-dom": "^18.1.0",
