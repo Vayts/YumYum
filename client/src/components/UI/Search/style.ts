@@ -15,13 +15,13 @@ export const SearchInput = styled.input`
   width: 100%;
   box-sizing: border-box;
   padding: 10px 10px 10px 40px;
-  border-radius: 10px;
+  border-radius: 3px;
   border: 1px solid #ECECED;
-  background-color: #f3f3f3;
+  background-color: #ffff;
 	outline: none;
 	
 	&:focus {
-		border: 1px solid ${({ theme }) => theme.primary};
+		border: 1px solid ${({ theme }) => theme.primaryColor};
 	}
 
 `;

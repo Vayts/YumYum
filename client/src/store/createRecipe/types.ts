@@ -2,13 +2,20 @@ export interface ICreateRecipeState {
 	isValid: boolean,
 	isLoading: boolean,
 	form: {
-		mainInfo: {
+		main: {
 			title: string,
 			description: string,
-			mainPhoto: string,
-		}
-		contentBlocks: ICreateRecipeContentBlock[],
+		},
+		ingredients: IIngredientItem[],
+		contentBlocks: {
+		
+		},
 	}
+}
+
+export interface IIngredientItem {
+	id: string,
+	value: string,
 }
 
 export interface ICreateRecipeContentBlock {
