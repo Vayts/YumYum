@@ -30,7 +30,7 @@ export const App: React.FC = () => {
 				</Routes>
 				<ToastContainer
 					position="top-center"
-					limit={3}
+					limit={1}
 					autoClose={3000}
 					hideProgressBar
 					newestOnTop={false}

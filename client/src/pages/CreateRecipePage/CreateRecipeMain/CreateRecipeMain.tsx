@@ -7,7 +7,9 @@ import { TextArea } from '@src/components/UI/TextArea/TextArea';
 import { useTranslation } from 'react-i18next';
 import { EditPhoto } from '@src/components/EditPhoto/EditPhoto';
 import { IEditPhotoState } from '@src/components/EditPhoto/types';
-import { Description } from '@src/components/UI/Description/Description';
+import { useAppDispatch, useAppSelector } from '@src/hooks/hooks';
+import { selectMainInfo } from '@src/store/createRecipe/selector';
+import { setMainInfo } from '@src/store/createRecipe/reducer';
 
 export const CreateRecipeMain: React.FC = () => {
 	const [editPhotoState, setEditPhoto] = useState<IEditPhotoState>({
@@ -18,22 +20,17 @@ export const CreateRecipeMain: React.FC = () => {
 		border: 60,
 		saveFunc: null,
 	});
-	const [mainInfo, setMainInfo] = useState({
-		photo: null,
-		title: '',
-		description: '',
-		ingredients: [],
-	});
 	const [mainPhoto, setMainPhoto] = useState(null);
+	const { title, description } = useAppSelector(selectMainInfo);
+	const dispatch = useAppDispatch();
 	const { t } = useTranslation();
+	
 	const setMainPhotoHandler = (photo) => {
-		setMainPhoto(URL.createObjectURL(photo));
+		setMainPhoto(photo);
 	};
 	
 	const changeHandler = (e) => {
-		setMainInfo((state) => {
-			return { ...state, [e.target.name]: e.target.value };
-		});
+		dispatch(setMainInfo({ name: e.target.name, value: e.target.value }));
 	};
 	
 	const openEditPhoto = (e) => {
@@ -57,13 +54,13 @@ export const CreateRecipeMain: React.FC = () => {
 					/>
 				) : null}
 			<CreateRecipeBlock>
-				<Title fz={18} fw={500}>{t('mainInfo')}</Title>
+				<Title fz={18} fw={500} margin='0 0 20px'>{t('mainInfo')}</Title>
 				<CreateRecipeMainInfo>
 					<CreateRecipeImgWrapper>
 						<FileUploader
 							onChange={(e) => openEditPhoto(e)}
 							name='mainPhoto'
-							value={mainPhoto}
+							value={mainPhoto ? URL.createObjectURL(mainPhoto) : null}
 							margin='0'
 						/>
 					</CreateRecipeImgWrapper>
@@ -71,7 +68,7 @@ export const CreateRecipeMain: React.FC = () => {
 						<Input
 							id='title'
 							name='title'
-							value={mainInfo.title}
+							value={title}
 							margin='0'
 							onChange={(e) => changeHandler(e)}
 							placeholder={`${t('recipeName')}*`}
@@ -79,7 +76,7 @@ export const CreateRecipeMain: React.FC = () => {
 							padding='10px'
 						/>
 						<TextArea
-							value={mainInfo.description}
+							value={description}
 							onChange={(e) => changeHandler(e)}
 							name='description'
 							id='asddf'
@@ -91,8 +88,6 @@ export const CreateRecipeMain: React.FC = () => {
 						/>
 					</CreateRecipeMainInputs>
 				</CreateRecipeMainInfo>
-				<Title fz={18} fw={500} margin='40px 0 0'>{t('ingredients')}</Title>
-				<Description>Додайте основні інгредієнти страви</Description>
 			</CreateRecipeBlock>
 		</>
 	);

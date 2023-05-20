@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import AvatarEditor from 'react-avatar-editor';
 import { Button } from '@src/components/UI/Button/Button';
@@ -6,6 +6,7 @@ import { IEditPhoto } from '@src/components/EditPhoto/types';
 import { EditPhotoBackground, EditPhotoButtons, EditPhotoWrapper } from '@src/components/EditPhoto/style';
 import { Description } from '@src/components/UI/Description/Description';
 import { getNotification } from '@src/notification/notifications';
+import { getScrollbarWidth } from '@helpers/visual.helper';
 
 export const EditPhoto: React.FC<IEditPhoto> = ({ state, setState }) => {
 	const { photo, height, width, saveFunc, border } = state;
@@ -13,6 +14,17 @@ export const EditPhoto: React.FC<IEditPhoto> = ({ state, setState }) => {
 	const [scale, setScale] = useState(1.1);
 	const editor = useRef(null);
 	const { t } = useTranslation();
+	
+	useEffect(() => {
+		const scrollbarWidth = getScrollbarWidth();
+		document.body.style.overflowY = 'hidden';
+		document.body.style.paddingRight = `${scrollbarWidth}px`;
+		
+		return () => {
+			document.body.style.overflowY = 'scroll';
+			document.body.style.paddingRight = '0';
+		};
+	}, []);
 	
 	const onMouseWheel = (e) => {
 		const delta = e.deltaY || e.detail;

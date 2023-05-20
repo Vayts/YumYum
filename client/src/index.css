@@ -3,7 +3,7 @@ body {
   font-family: 'Inter', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow: hidden;
+  overflow-y: scroll;
   background-color: #fbfbfb;
 }
 
@@ -30,7 +30,7 @@ code {
 
 [class^="icon-"], [class*=" icon-"] {
   /* use !important to prevent issues with browser extensions that change fonts */
-  font-family: 'icomoon' !important;
+  font-family: 'icomoon', serif !important;
   speak: never;
   font-style: normal;
   font-weight: normal;
