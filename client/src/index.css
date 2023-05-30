@@ -46,7 +46,6 @@ code {
 .icon-upload:before {
   content: "\e907";
 }
-
 .icon-down:before {
   content: "\e900";
 }
@@ -68,9 +67,13 @@ code {
 .icon-text:before {
   content: "\e906";
 }
+.icon-menu:before {
+  content: "\e918";
+}
 .icon-search:before {
   content: "\e923";
 }
 .icon-cancel:before {
   content: "\e934";
 }
+
