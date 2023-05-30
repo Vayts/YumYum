@@ -5,6 +5,7 @@
     "target": "es5", // В JS какого века компилировать
     "resolveJsonModule": true,
     "isolatedModules": true,
+    "strict": true,
     "lib": [
       "dom",
       "dom.iterable",
@@ -18,7 +19,7 @@
     "baseUrl": ".", // Где сам проект находится
     "paths": { // БЕЗ ЭТОГО АЛИАСЫ НЕ РАБОТАЮТ
       "*": [
-        "node_modules/*",
+        "node_modules/*"
       ],
       "@constants/*": [
         "./src/constants/*"
@@ -35,7 +36,7 @@
       "@src/*": [
         "./src/*"
       ]
-    },
+    }
   },
   "include": [
     "src/**/*"

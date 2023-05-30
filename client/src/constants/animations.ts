@@ -9,3 +9,13 @@ export const opacityAppear = keyframes`
     opacity: 1;
   }
 `;
+
+export const leftAppear = keyframes`
+  from {
+    left: -10%;
+  }
+
+  to {
+    left: 0;
+  }
+`;

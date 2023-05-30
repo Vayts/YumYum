@@ -13,7 +13,7 @@ const TerserWebpackPlugin = require('terser-webpack-plugin');
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
-const isDev = process.env.NODE_ENV === 'development';
+const isDev = process.env.NODE_ENV === 'production';
 const isProd = !isDev;
 
 const optimization = () => {
@@ -137,6 +137,11 @@ module.exports = {
 			'@helpers': path.resolve(__dirname, 'src/helpers'),
 			'@hoc': path.resolve(__dirname, 'src/components/hoc'),
 		},
+	},
+	performance: {
+		hints: false,
+		maxEntrypointSize: 512000,
+		maxAssetSize: 512000,
 	},
 	optimization: optimization(),
 	devServer: {

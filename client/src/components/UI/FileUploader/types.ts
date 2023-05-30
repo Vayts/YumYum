@@ -1,11 +1,14 @@
+import React from 'react';
+
 export interface IFileUploader {
-	value: string,
+	id: string,
+	value: string | null,
 	text?: string,
 	isValid?: boolean,
 	height?: string,
 	width?: string,
 	margin?: string,
-	onChange: (e) => void,
+	onChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
 	name: string,
 	fz?: number,
 }
@@ -16,6 +19,6 @@ export interface IFileUploaderStyle {
 	isValid?: boolean,
 	margin?: string,
 	fz?: number,
-	value?: string,
+	value?: string | null,
 	isActive?: boolean,
 }

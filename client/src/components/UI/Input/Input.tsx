@@ -19,6 +19,8 @@ export const Input: React.FC<IInput> = (props) => {
 		name,
 		isValid,
 		refValue,
+		min,
+		max,
 	} = props;
 	const [show, setShow] = useState(false);
 	
@@ -39,6 +41,8 @@ export const Input: React.FC<IInput> = (props) => {
 					fz={fz}
 					id={id}
 					aria-label={name}
+					minLength={min}
+					maxLength={max}
 				/>
 				{isSecure && (
 					<InputSecureIcon

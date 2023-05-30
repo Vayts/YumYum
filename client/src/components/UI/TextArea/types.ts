@@ -1,4 +1,5 @@
-import { Ref } from 'react';
+import React, { Ref } from 'react';
+import { DefaultTFuncReturn } from 'i18next';
 
 export interface ITextArea {
 	id: string,
@@ -9,11 +10,13 @@ export interface ITextArea {
 	height?: string,
 	width?: string,
 	value: string,
-	label?: string,
-	placeholder?: string,
-	onChange: (value) => void,
+	label?: string | DefaultTFuncReturn,
+	placeholder?: string | DefaultTFuncReturn,
+	onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void,
 	isValid?: boolean,
 	refValue?: Ref<HTMLInputElement> | null,
+	min?: number,
+	max?: number,
 }
 
 export interface ITextAreaStyle {

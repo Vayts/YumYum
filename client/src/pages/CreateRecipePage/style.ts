@@ -31,11 +31,8 @@ export const CreateRecipeImg = styled.div`
 
 export const CreateRecipeImgWrapper = styled.div`
   margin-right: 20px;
-	
-	label {
-    width: 450px;
-    height: 281px;
-	}
+  width: 450px;
+  height: 281px;
 `;
 
 export const CreateRecipeMainInputs = styled.div`

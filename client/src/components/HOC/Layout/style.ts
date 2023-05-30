@@ -5,7 +5,7 @@ export const LayoutWrapper = styled.div`
 `;
 
 export const LayoutMainContent = styled.div`
-  max-width: 1440px;
+  max-width: 1470px;
   padding: 0 15px;
   margin: 0 auto;
 `;

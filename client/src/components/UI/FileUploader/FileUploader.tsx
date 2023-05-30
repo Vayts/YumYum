@@ -11,10 +11,10 @@ import {
 import { useTranslation } from 'react-i18next';
 
 export const FileUploader: React.FC<IFileUploader> = (props) => {
-	const { height, margin, name, onChange, text, isValid, value, width } = props;
+	const { height, margin, name, onChange, text, isValid, value, width, id } = props;
 	const { t } = useTranslation();
 	
-	const changeHandler = (e) => {
+	const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
 		onChange(e);
 		e.target.value = '';
 	};
@@ -22,7 +22,7 @@ export const FileUploader: React.FC<IFileUploader> = (props) => {
 	return (
 		<FileUploaderWrapper
 			value={value}
-			htmlFor={name}
+			htmlFor={id}
 			height={height}
 			margin={margin}
 			width={width}
@@ -43,7 +43,7 @@ export const FileUploader: React.FC<IFileUploader> = (props) => {
 					<FileUploaderText>{text || t('uploadPicture')}</FileUploaderText>
 				</FileUploaderTextWrapper>
 			)}
-			<FileUploaderInput name={name} id={name} type='file' accept='.jpeg,.jpg,.png' onChange={(e) => changeHandler(e)}/>
+			<FileUploaderInput name={name} id={id} type='file' accept='.jpeg,.jpg,.png' onChange={(e) => changeHandler(e)}/>
 		</FileUploaderWrapper>
 	);
 };

@@ -6,3 +6,14 @@ export function getScrollbarWidth(): number {
 	document.body.removeChild(scrollDiv);
 	return scrollbarWidth;
 }
+
+export function hideScrollbar(): void {
+	const scrollbarWidth = getScrollbarWidth();
+	document.body.style.overflowY = 'hidden';
+	document.body.style.paddingRight = `${scrollbarWidth}px`;
+}
+
+export function showScrollbar(): void {
+	document.body.style.overflowY = 'scroll';
+	document.body.style.paddingRight = '0';
+}

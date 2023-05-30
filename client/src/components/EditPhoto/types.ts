@@ -1,21 +1,15 @@
 export interface IEditPhoto {
-	state: {
-		isOpen: boolean,
-		width: number,
-		height: number,
-		photo: string,
-		saveFunc: (any) => void,
-		border?: number,
-	}
-	setState: (state) => void,
+	state: IEditPhotoState,
+	setState: { (any: any) : void } | null,
 }
 
 export interface IEditPhotoState {
 	isOpen: boolean,
 	width: number,
 	height: number,
-	photo: string,
-	saveFunc: (any) => void,
+	photo: string | null,
+	photoName?: string,
+	saveFunc: { (any: any) : void } | null,
 	border?: number,
 }
 

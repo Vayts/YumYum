@@ -22,9 +22,6 @@ export const createRecipeSlice = createSlice({
 	name: 'createRecipe',
 	initialState,
 	reducers: {
-		setMainInfo: (state, action) => {
-			state.form.main[action.payload.name] = action.payload.value;
-		},
 		addIngredient: (state) => {
 			state.form.ingredients.push({
 				id: uuidv4(),
@@ -37,4 +34,4 @@ export const createRecipeSlice = createSlice({
 	},
 });
 
-export const { setMainInfo, addIngredient, setIngredients } = createRecipeSlice.actions;
+export const { addIngredient, setIngredients } = createRecipeSlice.actions;

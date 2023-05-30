@@ -1,5 +1,6 @@
 import { IModalState } from '@src/store/modal/types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { MODALS } from '@constants/modals';
 
 const initialState: IModalState = {
 	type: null,
