@@ -1,4 +1,5 @@
-import { Ref } from 'react';
+import React, { Ref } from 'react';
+import { DefaultTFuncReturn } from 'i18next';
 
 export interface IInput {
 	id: string,
@@ -11,11 +12,13 @@ export interface IInput {
 	value: string,
 	type?: 'text' | 'number' | 'password',
 	isSecure?: boolean,
-	label?: string,
-	placeholder?: string,
-	onChange: (value) => void,
+	label?: string | DefaultTFuncReturn,
+	placeholder?: string | DefaultTFuncReturn,
+	onChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
 	isValid?: boolean,
 	refValue?: Ref<HTMLInputElement> | null,
+	max?: number,
+	min?: number,
 }
 
 export interface IInputStyle {

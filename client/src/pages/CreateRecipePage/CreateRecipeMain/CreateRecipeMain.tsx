@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import { Title } from '@src/components/UI/Title/Title';
 import { CreateRecipeBlock, CreateRecipeImgWrapper, CreateRecipeMainInfo, CreateRecipeMainInputs } from '@src/pages/CreateRecipePage/style';
 import { FileUploader } from '@src/components/UI/FileUploader/FileUploader';
@@ -7,11 +7,11 @@ import { TextArea } from '@src/components/UI/TextArea/TextArea';
 import { useTranslation } from 'react-i18next';
 import { EditPhoto } from '@src/components/EditPhoto/EditPhoto';
 import { IEditPhotoState } from '@src/components/EditPhoto/types';
-import { useAppDispatch, useAppSelector } from '@src/hooks/hooks';
+import { useAppSelector } from '@src/hooks/hooks';
 import { selectMainInfo } from '@src/store/createRecipe/selector';
-import { setMainInfo } from '@src/store/createRecipe/reducer';
+import { ICreateRecipeMain } from '@src/pages/CreateRecipePage/CreateRecipeMain/types';
 
-export const CreateRecipeMain: React.FC = () => {
+export const CreateRecipeMain: React.FC<ICreateRecipeMain> = ({ mainInfo, setMainInfo }) => {
 	const [editPhotoState, setEditPhoto] = useState<IEditPhotoState>({
 		isOpen: false,
 		photo: null,
@@ -20,21 +20,29 @@ export const CreateRecipeMain: React.FC = () => {
 		border: 60,
 		saveFunc: null,
 	});
-	const [mainPhoto, setMainPhoto] = useState(null);
 	const { title, description } = useAppSelector(selectMainInfo);
-	const dispatch = useAppDispatch();
 	const { t } = useTranslation();
 	
-	const setMainPhotoHandler = (photo) => {
-		setMainPhoto(photo);
+	const setMainPhotoHandler = (photo: any) => {
+		setMainInfo((state) => {
+			return {
+				...state,
+				photo,
+			};
+		});
 	};
 	
-	const changeHandler = (e) => {
-		dispatch(setMainInfo({ name: e.target.name, value: e.target.value }));
+	const changeHandler = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+		setMainInfo((state) => {
+			return {
+				...state,
+				[e.target.name]: e.target.value,
+			};
+		});
 	};
 	
-	const openEditPhoto = (e) => {
-		if (e.target.files[0]) {
+	const openEditPhoto = (e: ChangeEvent<HTMLInputElement>) => {
+		if (e.target?.files && e.target.files[0]) {
 			const value = URL.createObjectURL(e.target.files[0]);
 			setEditPhoto((state) => {
 				return { ...state, photo: value, isOpen: true, saveFunc: setMainPhotoHandler };
@@ -58,9 +66,10 @@ export const CreateRecipeMain: React.FC = () => {
 				<CreateRecipeMainInfo>
 					<CreateRecipeImgWrapper>
 						<FileUploader
+							id='mainPhoto'
 							onChange={(e) => openEditPhoto(e)}
 							name='mainPhoto'
-							value={mainPhoto ? URL.createObjectURL(mainPhoto) : null}
+							value={mainInfo.photo ? URL.createObjectURL(mainInfo.photo) : null}
 							margin='0'
 						/>
 					</CreateRecipeImgWrapper>
@@ -84,7 +93,7 @@ export const CreateRecipeMain: React.FC = () => {
 							margin='15px 0 0'
 							padding='10px'
 							fz={16}
-							placeholder='Опис рецепту'
+							placeholder={t('recipeDescription')}
 						/>
 					</CreateRecipeMainInputs>
 				</CreateRecipeMainInfo>

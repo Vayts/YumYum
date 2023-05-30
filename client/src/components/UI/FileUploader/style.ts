@@ -5,13 +5,12 @@ export const FileUploaderWrapper = styled.label<IFileUploaderStyle>`
   position: relative;
 	display: block;
   margin: ${({ margin = '5px 0' }) => margin};
-  width: ${({ width = 'auto' }) => width};
-  height: ${({ height = 'auto' }) => height};
+  width: ${({ width = '100%' }) => width};
+  height: ${({ height = '100%' }) => height};
   font-size: ${({ fz = 16 }) => `${fz}px`};
   border: 2px dotted ${({ isValid, theme }) => (isValid ? '#E2E8F0' : theme.dangerColor)};
   color: ${({ theme }) => theme.reverseLight};
 	border-radius: 3px;
-  box-shadow: ${({ theme }) => theme.softShadow};
 	
 	&:hover {
 		cursor: pointer;
@@ -77,7 +76,7 @@ export const FileUploaderFiller = styled.div<IFileUploaderStyle>`
 export const FileUploaderImg = styled.img`
   height: 100%;
   width: 100%;
-	object-fit: cover;
+	object-fit: fill;
   border-radius: 3px;
 	z-index: 10;
 `;

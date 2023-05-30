@@ -18,5 +18,6 @@ root.render(
 				<Route path='*' element={<App/>}/>
 			</Routes>
 		</Provider>
-	</BrowserRouter>,
+	</BrowserRouter>
+	,
 );

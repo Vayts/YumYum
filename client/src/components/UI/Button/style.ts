@@ -12,20 +12,21 @@ export const ButtonItem = styled.button<IButtonStyle>`
   border-radius: ${({ br = '2px' }) => br};
 	border: 1px solid transparent;
   position: relative;
+	transition: all 0.1s;
 
   &:disabled, &[disabled] {
     background-color: ${({ theme }) => theme.greyLight};
-    color: ${({ theme }) => theme.greyColor};
+    color: ${({ theme }) => theme.subTxtColor};
 	  border-color: ${({ theme }) => theme.greyColor};
 
     &:hover {
       cursor: default;
       background-color: ${({ theme }) => theme.greyLight};
-      color: ${({ theme }) => theme.greyColor};
+      color: ${({ theme }) => theme.subTxtColor};
       border-color: ${({ theme }) => theme.greyColor};
     }
   }
-
+	
   &:hover {
     cursor: pointer;
     transition: all 0.2s;
@@ -44,6 +45,21 @@ export const ButtonItem = styled.button<IButtonStyle>`
         }
       `;
 		}
+
+		if (styleType === 'reverse') {
+			return css`
+        background-color: ${({ theme }) => theme.greyLight};
+        color: ${({ theme }) => theme.subTxtColor};
+        border-color: ${({ theme }) => theme.greyColor};
+
+        &:hover {
+          background-color: ${({ theme }) => theme.primaryLight};
+          border: 1px solid ${({ theme }) => theme.primaryLight};
+          color: ${({ theme }) => theme.primaryColor};
+        }
+      `;
+		}
+		
 		return css`
       border: 1px solid ${({ theme }) => theme.primaryColor};
 			background-color: ${({ theme }) => theme.primaryColor};
@@ -62,6 +78,7 @@ export const ButtonContent = styled.div`
   display: flex;
   justify-content: center;
 	align-items: center;
+	
 `;
 
 export const ButtonIcon = styled.span<IButtonStyle>`

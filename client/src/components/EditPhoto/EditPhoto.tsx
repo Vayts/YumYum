@@ -6,27 +6,24 @@ import { IEditPhoto } from '@src/components/EditPhoto/types';
 import { EditPhotoBackground, EditPhotoButtons, EditPhotoWrapper } from '@src/components/EditPhoto/style';
 import { Description } from '@src/components/UI/Description/Description';
 import { getNotification } from '@src/notification/notifications';
-import { getScrollbarWidth } from '@helpers/visual.helper';
+import { hideScrollbar, showScrollbar } from '@helpers/visual.helper';
 
 export const EditPhoto: React.FC<IEditPhoto> = ({ state, setState }) => {
-	const { photo, height, width, saveFunc, border } = state;
+	const { photo, height, width, saveFunc, border, photoName } = state;
 	const [isLoading, setLoading] = useState(false);
 	const [scale, setScale] = useState(1.1);
-	const editor = useRef(null);
+	const editor = useRef<AvatarEditor>(null);
 	const { t } = useTranslation();
 	
 	useEffect(() => {
-		const scrollbarWidth = getScrollbarWidth();
-		document.body.style.overflowY = 'hidden';
-		document.body.style.paddingRight = `${scrollbarWidth}px`;
+		hideScrollbar();
 		
 		return () => {
-			document.body.style.overflowY = 'scroll';
-			document.body.style.paddingRight = '0';
+			showScrollbar();
 		};
 	}, []);
 	
-	const onMouseWheel = (e) => {
+	const onMouseWheel = (e: React.WheelEvent<HTMLDivElement>) => {
 		const delta = e.deltaY || e.detail;
 		const scaleModifier = delta > 0 ? -0.1 : +0.1;
 		const newScaleData = scale + scaleModifier;
@@ -41,13 +38,15 @@ export const EditPhoto: React.FC<IEditPhoto> = ({ state, setState }) => {
 			return false;
 		}
 		
-		setState((state) => {
-			return {
-				...state,
-				isOpen: false,
-				photo: null,
-			};
-		});
+		if (setState) {
+			setState((state: any) => {
+				return {
+					...state,
+					isOpen: false,
+					photo: null,
+				};
+			});
+		}
 	};
 	
 	const saveHandler = () => {
@@ -56,14 +55,18 @@ export const EditPhoto: React.FC<IEditPhoto> = ({ state, setState }) => {
 		}
 		
 		setLoading(true);
-		if (editor) {
+		if (editor?.current) {
 			const canvas = editor.current.getImage().toDataURL();
 			fetch(canvas).then((res) => res.blob())
 				.then((blob) => {
-					const type = photo.split('.').pop();
-					const name = 'test recipe';
+					const type = photo ? photo.split('.').pop() : '.jpg';
+					const name = photoName || '';
 					const result = new File([blob], name, { type: `image/${type}`, lastModified: new Date().getTime() });
-					saveFunc(result);
+					
+					if (saveFunc) {
+						saveFunc(result);
+					}
+					
 					setLoading(false);
 				})
 				.then(() => {
@@ -78,17 +81,22 @@ export const EditPhoto: React.FC<IEditPhoto> = ({ state, setState }) => {
 	return (
 		<EditPhotoBackground>
 			<EditPhotoWrapper width={width} border={border}>
-				<AvatarEditor
-					ref={editor}
-					image={photo}
-					width={width || 600}
-					height={height || 337}
-					border={border || 30}
-					color={[232, 232, 232, 0.6]}
-					scale={scale}
-					rotate={0}
-					onWheel={(e) => onMouseWheel(e)}
-				/>
+				<div
+					onWheel={(e: React.WheelEvent<HTMLDivElement>) => onMouseWheel(e)}
+				>
+					<AvatarEditor
+						ref={editor}
+						image={photo || ''}
+						width={width || 600}
+						height={height || 337}
+						border={border || 30}
+						color={[232, 232, 232, 0.6]}
+						scale={scale}
+						rotate={0}
+						
+					/>
+				</div>
+				
 				<Description
 					margin='10px 20px 0'
 					align='center'

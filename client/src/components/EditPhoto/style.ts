@@ -29,6 +29,8 @@ export const EditPhotoWrapper = styled.div<IEditPhotoStyle>`
   border-radius: 5px;
 `;
 
+export const EditPhotoWheelWrapper = styled.div``;
+
 export const EditPhotoButtons = styled.div`
 	margin-top: 40px;
   display: flex;

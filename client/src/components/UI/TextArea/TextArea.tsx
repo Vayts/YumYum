@@ -16,11 +16,13 @@ export const TextArea: React.FC<ITextArea> = (props) => {
 		id,
 		name,
 		isValid,
+		min,
+		max,
 	} = props;
 	
 	return (
 		<TextAreaWrapper margin={margin} width={width} height={height}>
-			<TextAreaLabel htmlFor={id}>{label}</TextAreaLabel>
+			{label && <TextAreaLabel htmlFor={id}>{label}</TextAreaLabel>}
 			<TextAreaElemWrapper>
 				<TextAreaElem
 					name={name}
@@ -33,6 +35,8 @@ export const TextArea: React.FC<ITextArea> = (props) => {
 					fz={fz}
 					id={id}
 					aria-label={name}
+					minLength={min}
+					maxLength={max}
 				/>
 			</TextAreaElemWrapper>
 		</TextAreaWrapper>

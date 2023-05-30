@@ -1,11 +1,9 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 import { Loader } from '@src/components/Loader/Loader';
 import { IButton } from '@src/components/UI/Button/types';
 import { ButtonContent, ButtonIcon, ButtonItem, ButtonText } from '@src/components/UI/Button/style';
 
 export const Button: React.FC<IButton> = (props) => {
- 
 	const {
 		margin,
 		padding,
@@ -20,6 +18,7 @@ export const Button: React.FC<IButton> = (props) => {
 		isLoading,
 		icon,
 		br,
+		type,
 	} = props;
 	return (
 		<ButtonItem
@@ -33,7 +32,7 @@ export const Button: React.FC<IButton> = (props) => {
 			onClick={(e) => clickHandler(e)}
 			disabled={disabled || isLoading}
 			br={br}
-			type='button'
+			type={type || 'button'}
 		>
 			{isLoading ? <Loader size={15}/> : (
 				<ButtonContent>

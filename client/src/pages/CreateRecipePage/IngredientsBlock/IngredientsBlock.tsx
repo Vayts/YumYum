@@ -1,12 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { CreateRecipeBlock } from '@src/pages/CreateRecipePage/style';
 import { Title } from '@src/components/UI/Title/Title';
 import { useTranslation } from 'react-i18next';
-import { useAppDispatch, useAppSelector } from '@src/hooks/hooks';
-import { selectIngredients } from '@src/store/createRecipe/selector';
 import { Input } from '@src/components/UI/Input/Input';
 import { Button } from '@src/components/UI/Button/Button';
-import { addIngredient, setIngredients } from '@src/store/createRecipe/reducer';
 import { Description } from '@src/components/UI/Description/Description';
 import {
 	IngredientsIcon,
@@ -14,18 +11,28 @@ import {
 	IngredientsInputElemWrapper,
 	IngredientsInputWrapper, IngredientsOrderIcon,
 } from '@src/pages/CreateRecipePage/IngredientsBlock/style';
+import { v4 as uuidv4 } from 'uuid';
+import { IIngredientsBlock } from '@src/pages/CreateRecipePage/IngredientsBlock/types';
 
-export const IngredientsBlock: React.FC = () => {
-	const ingredients = useAppSelector(selectIngredients);
-	const dispatch = useAppDispatch();
+export const IngredientsBlock: React.FC<IIngredientsBlock> = ({ setIngredients, ingredients }) => {
 	const { t } = useTranslation();
 	
 	const addNewIngredient = () => {
-		dispatch(addIngredient());
+		setIngredients((state) => state.concat({
+			id: uuidv4(),
+			value: '',
+		}));
 	};
 	
-	const changeHandler = (e) => {
-		const newState = ingredients.map((item) => {
+	useEffect(() => {
+		setIngredients((state) => state.concat({
+			id: uuidv4(),
+			value: '',
+		}));
+	}, []);
+	
+	const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setIngredients((state) => state.map((item) => {
 			if (item.id === e.target.id) {
 				return {
 					...item,
@@ -33,35 +40,32 @@ export const IngredientsBlock: React.FC = () => {
 				};
 			}
 			return item;
-		});
-		dispatch(setIngredients(newState));
+		}));
 	};
 	
-	const changePositionUp = (index) => {
+	const changePositionUp = (index: number) => {
 		if (ingredients[index - 1]) {
 			const temp = ingredients[index - 1];
 			const newState = ingredients.slice(0, ingredients.length);
 			newState[index - 1] = newState[index];
 			newState[index] = temp;
-			dispatch(setIngredients(newState));
+			setIngredients(() => newState);
 		}
 	};
 	
-	const changePositionDown = (index) => {
+	const changePositionDown = (index: number) => {
 		if (ingredients[index + 1]) {
 			const temp = ingredients[index + 1];
 			const newState = ingredients.slice(0, ingredients.length);
 			newState[index + 1] = newState[index];
 			newState[index] = temp;
-			dispatch(setIngredients(newState));
+			setIngredients(() => newState);
 		}
 	};
 	
-	const deleteHandler = (id) => {
+	const deleteHandler = (id: string) => {
 		if (ingredients.length > 1) {
-			const newState = ingredients.filter((item) => item.id !== id);
-			dispatch(setIngredients(newState));
-			return true;
+			setIngredients((state) => state.filter((item) => item.id !== id));
 		}
 	};
 	

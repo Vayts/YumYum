@@ -1,17 +1,21 @@
+import React from 'react';
+import { DefaultTFuncReturn } from 'i18next';
+
 export interface IButton {
 	margin?: string,
 	padding?: string,
 	fz?: number,
 	fw?: number,
-	text?: string,
+	text?: string | DefaultTFuncReturn,
 	height?: string,
 	width?: string,
-	styleType?: 'transparent' | 'primary' | 'cancel' | 'confirm',
-	clickHandler: (e) => void,
+	styleType?: 'transparent' | 'primary' | 'cancel' | 'confirm' | 'reverse',
+	clickHandler: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void,
 	disabled?: boolean,
 	isLoading?: boolean,
 	icon?: string,
 	br?: string,
+	type?: 'button' | 'submit',
 }
 
 export interface IButtonStyle {
@@ -23,5 +27,5 @@ export interface IButtonStyle {
 	width?: string,
 	disabled?: boolean,
 	br?: string,
-	styleType?: 'transparent' | 'primary' | 'cancel' | 'confirm',
+	styleType?: 'transparent' | 'primary' | 'cancel' | 'confirm' | 'reverse',
 }
