@@ -28,7 +28,7 @@ export const TextArea: React.FC<ITextArea> = (props) => {
 					name={name}
 					onChange={(e) => onChange(e)}
 					value={value}
-					placeholder={placeholder}
+					placeholder={placeholder as string}
 					height={height}
 					padding={padding}
 					isValid={isValid !== undefined ? isValid : true}
