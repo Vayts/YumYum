@@ -13,30 +13,30 @@ import { CreateRecipePage } from '@src/pages/CreateRecipePage/CreateRecipePage';
 import { AppWrapper } from './style';
 
 export const App: React.FC = () => {
-	const isModalActive = useAppSelector(selectModalType);
+  const isModalActive = useAppSelector(selectModalType);
 	
-	return (
-		<ThemeProvider theme={THEMES.light}>
-			<AppWrapper>
-				<Routes>
-					<Route path='/' element={<Layout/>}>
-						<Route path='/' element={<CreateRecipePage/>}/>
-						<Route path='/' element={<RequireAuth/>} />
-					</Route>
-				</Routes>
-				<ToastContainer
-					position="top-center"
-					limit={1}
-					autoClose={3000}
-					hideProgressBar
-					newestOnTop={false}
-					closeOnClick
-					rtl={false}
-					draggable={false}
-					theme="colored"
-				/>
-				{isModalActive && <Modal/>}
-			</AppWrapper>
-		</ThemeProvider>
-	);
+  return (
+    <ThemeProvider theme={THEMES.light}>
+      <AppWrapper>
+        <Routes>
+          <Route path='/' element={<Layout/>}>
+            <Route path='/' element={<CreateRecipePage/>}/>
+            <Route path='/' element={<RequireAuth/>} />
+          </Route>
+        </Routes>
+        <ToastContainer
+          position="top-center"
+          limit={1}
+          autoClose={3000}
+          hideProgressBar
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          draggable={false}
+          theme="colored"
+        />
+        {isModalActive && <Modal/>}
+      </AppWrapper>
+    </ThemeProvider>
+  );
 };

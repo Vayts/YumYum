@@ -6,35 +6,35 @@ import { resetModal } from '@src/store/modal/reducer';
 import { hideScrollbar, showScrollbar } from '@helpers/visual.helper';
 
 export const Modal: React.FC = () => {
-	const type = useAppSelector(selectModalType);
-	const content = useAppSelector(selectModalContent);
-	const dispatch = useAppDispatch();
+  const type = useAppSelector(selectModalType);
+  const content = useAppSelector(selectModalContent);
+  const dispatch = useAppDispatch();
 	
-	useEffect(() => {
-		hideScrollbar();
+  useEffect(() => {
+    hideScrollbar();
 		
-		return () => {
-			showScrollbar();
-		};
-	}, []);
+    return () => {
+      showScrollbar();
+    };
+  }, []);
 	
-	const generateModalContent = () => {
-		switch (type) {
-		default:
-			return null;
-		}
-	};
+  const generateModalContent = () => {
+    switch (type) {
+    default:
+      return null;
+    }
+  };
 	
-	const closeModal = () => {
-		dispatch(resetModal());
-	};
+  const closeModal = () => {
+    dispatch(resetModal());
+  };
 	
-	return (
-		<ModalWrapper>
-			<ModalDialog>
-				{content?.noCloseButton && <ModalClose className='icon-cancel' onClick={() => closeModal()}/>}
-				{generateModalContent()}
-			</ModalDialog>
-		</ModalWrapper>
-	);
+  return (
+    <ModalWrapper>
+      <ModalDialog>
+        {content?.noCloseButton && <ModalClose className='icon-cancel' onClick={() => closeModal()}/>}
+        {generateModalContent()}
+      </ModalDialog>
+    </ModalWrapper>
+  );
 };

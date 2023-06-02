@@ -40,15 +40,15 @@ export const MenuContent = styled.div<IMenuStyle>`
   animation: ${scaleAppear} 0.05s linear;
 	
 	${({ left }) => {
-		if (left) {
-			return css`
+    if (left) {
+      return css`
         left: 100%;
 			`;
-		}
-		return css`
+    }
+    return css`
       right: 0;
 		`;
-	}}
+  }}
 `;
 
 export const MenuList = styled.ul`
@@ -67,14 +67,14 @@ export const MenuItem = styled.li<IMenuItemStyle>`
 	}
 	
 	${({ isDanger, theme }) => {
-		if (isDanger) {
-			return css`
+    if (isDanger) {
+      return css`
 				color: ${theme.dangerColor};
 				
 				&:hover {
           background-color: ${theme.dangerColor}20;
 				}
 			`;
-		}
-	}}
+    }
+  }}
 `;

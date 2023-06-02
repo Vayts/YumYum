@@ -20,8 +20,8 @@ export const FileUploaderWrapper = styled.label<IFileUploaderStyle>`
 
 
   ${({ value }) => {
-		if (value) {
-			return css`
+    if (value) {
+      return css`
 				border-color: transparent;
         box-shadow: ${({ theme }) => theme.modalShadow};
 				
@@ -30,8 +30,8 @@ export const FileUploaderWrapper = styled.label<IFileUploaderStyle>`
           color: ${({ theme }) => theme.reverseLight};
 				}
 			`;
-		}
-	}}
+    }
+  }}
 `;
 
 export const FileUploaderImgWrapper = styled.div`
@@ -60,15 +60,15 @@ export const FileUploaderFiller = styled.div<IFileUploaderStyle>`
 	opacity: 0;
 
   ${({ isActive }) => {
-		if (!isActive) {
-			return css`
+    if (!isActive) {
+      return css`
         &:hover {
           opacity: 1;
           transition: all 0.2s;
         }
 			`;
-		}
-	}}
+    }
+  }}
 	
 	
 `;

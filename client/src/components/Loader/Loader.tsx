@@ -8,11 +8,11 @@ import { LoaderWrapper } from './style';
 type Theme = typeof THEMES.light;
 
 export const Loader: FC<ILoader> = ({ color, size }) => {
-	const theme = useTheme() as Theme;
+  const theme = useTheme() as Theme;
 	
-	return (
-		<LoaderWrapper data-testid='loaderId'>
-			<ClipLoader color={color || theme.primaryColor} loading size={size || 100} />
-		</LoaderWrapper>
-	);
+  return (
+    <LoaderWrapper data-testid='loaderId'>
+      <ClipLoader color={color || theme.primaryColor} loading size={size || 100} />
+    </LoaderWrapper>
+  );
 };

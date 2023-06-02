@@ -1,5 +1,5 @@
 export const MODALS = {
-	RECIPE: {
-		CONTENT_BLOCKS: 'CONTENT_BLOCKS',
-	},
+  RECIPE: {
+    CONTENT_BLOCKS: 'CONTENT_BLOCKS',
+  },
 };
