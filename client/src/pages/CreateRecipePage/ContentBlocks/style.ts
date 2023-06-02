@@ -10,7 +10,7 @@ export const ContentBlockItem = styled.li`
   margin-top: 25px;
   box-shadow: ${({ theme }) => theme.softShadow};
   background-color: ${({ theme }) => theme.componentBg};
-  padding: 20px 20px 40px;
+  padding: 20px 20px;
   position: relative;
 `;
 
