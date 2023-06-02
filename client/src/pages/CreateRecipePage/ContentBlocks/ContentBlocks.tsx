@@ -100,13 +100,15 @@ export const ContentBlocks: React.FC<IContentBlocks> = ({ setContentBlocks, cont
 					);
 				})}
 			</ContentBlocksList>
-			<Button
-				clickHandler={() => setModalOpen(true)}
-				width='100%'
-				text={t('addContentBlock')}
-				margin='20px 0'
-				padding='15px 0'
-			/>
+			{contentBlocks.length < 10 && (
+				<Button
+					clickHandler={() => setModalOpen(true)}
+					width='100%'
+					text={t('addContentBlock')}
+					margin='20px 0'
+					padding='15px 0'
+				/>
+			)}
 		</>
 	);
 };

@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const ContentBlocksList = styled.ul`
 	list-style: none;
-	margin: 0;
+	margin: 0 0 15px;
 	padding: 0;
 `;
 
