@@ -16,6 +16,8 @@ export interface ICreateRecipeState {
 export interface IIngredientItem {
 	id: string,
 	value: string,
+  errors: Record<string, string>,
+  touched: boolean,
 }
 
 export interface ICreateRecipeContentBlock {

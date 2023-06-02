@@ -30,6 +30,8 @@ export const ContentBlockModal: React.FC<IContentBlockModal> = ({ setContentBloc
 				id: uuidv4(),
 				type: contentBlockType.type,
 				content: contentBlockType.content,
+				errors: {},
+				touched: {},
 			};
 			
 			setContentBlocks([...contentBlocks, newBlock]);

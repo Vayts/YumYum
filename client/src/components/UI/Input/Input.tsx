@@ -26,14 +26,14 @@ export const Input: React.FC<IInput> = (props) => {
 	
 	return (
 		<InputWrapper margin={margin} width={width}>
-			{label ? <InputLabel htmlFor={id}>{label}</InputLabel> : null}
+			{label ? <InputLabel htmlFor={id} isValid={isValid !== undefined ? isValid : true}>{label}</InputLabel> : null}
 			<InputElemWrapper>
 				<InputElem
 					name={name}
 					ref={refValue || null}
 					onChange={(e) => onChange(e)}
 					value={value}
-					placeholder={placeholder}
+					placeholder={placeholder as string}
 					type={isSecure && show ? 'text' : type || 'text'}
 					height={height}
 					padding={padding}

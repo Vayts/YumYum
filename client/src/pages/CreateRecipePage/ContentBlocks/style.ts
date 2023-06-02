@@ -11,6 +11,7 @@ export const ContentBlockItem = styled.li`
   box-shadow: ${({ theme }) => theme.softShadow};
   background-color: ${({ theme }) => theme.componentBg};
   padding: 20px 20px 40px;
+  position: relative;
 `;
 
 export const ContentBlockControlsWrapper = styled.div`
@@ -20,6 +21,12 @@ export const ContentBlockControlsWrapper = styled.div`
 
 export const ContentBlockRadioWrapper = styled.div`
 
+`;
+
+export const ContentMenuWrapper = styled.div`
+  position: absolute;
+	top: 15px;
+	right: 10px;
 `;
 
 export const ContentBlockRadioLabel = styled.label`

@@ -1,8 +1,7 @@
-import { IPhotoContentBlock } from '@src/types/contentBlocks.types';
+import { IContentBlock } from '@src/types/contentBlocks.types';
 
 export interface IContentPhotoBlockProps {
-	content: IPhotoContentBlock,
-	id: string,
+	contentBlock: IContentBlock,
 	onChangeHandler: (name: string, value: string, id: string) => void,
 }
 

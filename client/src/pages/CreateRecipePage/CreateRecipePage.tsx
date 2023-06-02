@@ -18,6 +18,8 @@ export const CreateRecipePage: React.FC = () => {
 		photo: null,
 		title: '',
 		description: '',
+		errors: {},
+		touched: {},
 	});
 	const [ingredients, setIngredients] = useState<IIngredientItem[]>([]);
 	const [contentBlocks, setContentBlocks] = useState<IContentBlock[]>([]);

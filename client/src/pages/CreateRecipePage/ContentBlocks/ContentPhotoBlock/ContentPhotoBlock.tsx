@@ -6,8 +6,10 @@ import { ContentPhotoBlockImgHolder, ContentPhotoBlockWrapper } from '@src/pages
 import { FileUploader } from '@src/components/UI/FileUploader/FileUploader';
 import { Input } from '@src/components/UI/Input/Input';
 import { EditPhoto } from '@src/components/EditPhoto/EditPhoto';
+import { ErrorMsg } from '@src/components/UI/ErrorMsg/ErrorMsg';
+import { IPhotoContentBlock } from '@src/types/contentBlocks.types';
 
-export const ContentPhotoBlock: React.FC<IContentPhotoBlockProps> = ({ content, id, onChangeHandler }) => {
+export const ContentPhotoBlock: React.FC<IContentPhotoBlockProps> = ({ contentBlock, onChangeHandler }) => {
 	const [editPhotoState, setEditPhoto] = useState<IEditPhotoState>({
 		isOpen: false,
 		photo: null,
@@ -16,7 +18,8 @@ export const ContentPhotoBlock: React.FC<IContentPhotoBlockProps> = ({ content, 
 		border: 60,
 		saveFunc: null,
 	});
-	const { photoDescription, photo } = content;
+	const { content, id, touched, errors } = contentBlock;
+	const { photoDescription, photo } = content as IPhotoContentBlock;
 	const { t } = useTranslation();
 	
 	const setPhotoHandler = (photo: any) => {
@@ -63,7 +66,9 @@ export const ContentPhotoBlock: React.FC<IContentPhotoBlockProps> = ({ content, 
 					fz={16}
 					padding='10px'
 					max={50}
+					isValid={touched.photoDescription && !errors.photoDescription}
 				/>
+				<ErrorMsg show={touched.photoDescription && !!errors.photoDescription} margin='5px 0 0'>{errors.photoDescription}</ErrorMsg>
 			</ContentPhotoBlockWrapper>
 		</>
 	);

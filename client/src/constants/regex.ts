@@ -4,3 +4,5 @@ export const DEFAULT_REGEX_EXP = /^[А-ЩЬЮЯҐЄІЇа-щьюяґєіїA-Za-z
 export const PASSWORD_REGEX = /^[A-Za-z_0-9]+$/;
 export const UPPER_CASE_REGEX = /[A-Z]/;
 export const NUMBER_REGEX = /[0-9]/;
+
+export const DEFAULT_RECIPE_TEXT_REGEX = /^[a-zA-Z0-9\u0400-\u04FF\s.,;:'"?!()@#$%&*\-+=<>[\]{}|\\/^_`~]*$/;

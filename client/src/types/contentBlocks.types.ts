@@ -6,6 +6,8 @@ export interface IContentFiller {
 export interface IContentBlock {
 	id: string,
 	type: string,
+  errors: Record<string, string>,
+  touched: Record<string, boolean>,
 	content: IPhotoContentBlock | IPhotoTextContentBlock | ITextContentBlock,
 }
 

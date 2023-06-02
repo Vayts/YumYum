@@ -16,12 +16,13 @@ export const ContentPhotoTextBlockImgHolder = styled.div`
 `;
 
 export const ContentPhotoTextBlockInputsWrapper = styled.div<IContentPhotoTextBlockStyle>`
-	flex-grow: 1;
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
+
   order: ${({ photoPosition }) => (photoPosition === 'right' ? 1 : 2)};
 
-  div:last-child {
-    flex-grow: 1;
-  }
+  //div:last-child {
+  //  flex-grow: 1;
+  //}
 `;

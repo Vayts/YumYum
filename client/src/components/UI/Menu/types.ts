@@ -8,3 +8,8 @@ export interface IMenuStyle {
 	vertical?: boolean,
 	left?: boolean,
 }
+
+export interface IMenuItemStyle {
+	isDisabled?: boolean,
+	isDanger?: boolean,
+}
