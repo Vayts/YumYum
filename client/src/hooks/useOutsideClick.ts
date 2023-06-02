@@ -1,18 +1,18 @@
 import { RefObject, useEffect } from 'react';
-import { useAppSelector } from '@src/hooks/hooks';
 
 export function useOutsideClick(ref: RefObject<HTMLElement>, func: () => void, spectate = null): void {
-	useEffect(() => {
-		function handleClick(event) {
-			if (ref.current && !ref.current.contains(event.target)) {
-				func();
-			}
-		}
+  useEffect(() => {
+    function handleClick(event: MouseEvent) {
+      const target = event.target as Node;
+      if (ref.current && !ref.current.contains(target)) {
+        func();
+      }
+    }
 		
-		document.addEventListener('mousedown', handleClick);
+    document.addEventListener('mousedown', handleClick);
 		
-		return () => {
-			document.removeEventListener('mousedown', handleClick);
-		};
-	}, [ref, spectate]);
+    return () => {
+      document.removeEventListener('mousedown', handleClick);
+    };
+  }, [ref, spectate]);
 }

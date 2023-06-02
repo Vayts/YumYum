@@ -21,19 +21,19 @@ export const IngredientsOrderIcon = styled.span<IIngredientBlockIconStyle>`
   font-size: 20px;
 	
 	${({ isDisabled, theme }) => {
-		if (!isDisabled) {
-			return css`
+    if (!isDisabled) {
+      return css`
         &:hover {
           transition: all 0.1s;
           color: ${theme.primaryColor};
           cursor: pointer;
         }
 			`;
-		}
-		return css`
+    }
+    return css`
 			color: ${theme.greyColor};
 		`;
-	}}
+  }}
 	
   
 `;
@@ -48,17 +48,17 @@ export const IngredientsIcon = styled.span<IIngredientBlockIconStyle>`
 	color: ${({ theme }) => theme.subTxtColor};
 
   ${({ isDisabled, theme }) => {
-		if (!isDisabled) {
-			return css`
+    if (!isDisabled) {
+      return css`
         &:hover {
           transition: all 0.1s;
           cursor: pointer;
           color: ${theme.dangerColor};
         }
 			`;
-		}
-		return css`
+    }
+    return css`
 			color: ${theme.greyColor};
 		`;
-	}}
+  }}
 `;

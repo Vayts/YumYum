@@ -33,8 +33,8 @@ export const ButtonItem = styled.button<IButtonStyle>`
   }
 
   ${({ styleType }) => {
-		if (styleType === 'transparent') {
-			return css`
+    if (styleType === 'transparent') {
+      return css`
         background-color: transparent;
         border-color: #3e3e3e;
         box-shadow: none;
@@ -44,10 +44,10 @@ export const ButtonItem = styled.button<IButtonStyle>`
           background-color: ${({ theme }) => theme.greyLight};
         }
       `;
-		}
+    }
 
-		if (styleType === 'reverse') {
-			return css`
+    if (styleType === 'reverse') {
+      return css`
         background-color: ${({ theme }) => theme.greyLight};
         color: ${({ theme }) => theme.subTxtColor};
         border-color: ${({ theme }) => theme.greyColor};
@@ -58,9 +58,9 @@ export const ButtonItem = styled.button<IButtonStyle>`
           color: ${({ theme }) => theme.primaryColor};
         }
       `;
-		}
+    }
 		
-		return css`
+    return css`
       border: 1px solid ${({ theme }) => theme.primaryColor};
 			background-color: ${({ theme }) => theme.primaryColor};
       color: #fff;
@@ -71,7 +71,7 @@ export const ButtonItem = styled.button<IButtonStyle>`
         color: #fff;
       }
     `;
-	}}
+  }}
 `;
 
 export const ButtonContent = styled.div`

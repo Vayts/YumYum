@@ -11,10 +11,7 @@
   },
   "rules": {
     "react/prefer-stateless-function": "off",
-    "indent": [
-      2,
-      "tab"
-    ],
+    "indent": ["error", 2],
     "no-tabs": 0,
     "react/jsx-indent": [
       "off",

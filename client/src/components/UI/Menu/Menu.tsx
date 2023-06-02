@@ -4,19 +4,19 @@ import { MenuContent, MenuIcon, MenuWrapper } from '@src/components/UI/Menu/styl
 import { useOutsideClick } from '@src/hooks/useOutsideClick';
 
 export const Menu: React.FC<IMenu> = ({ vertical, children }) => {
-	const menuRef = useRef(null);
-	const [isOpen, setOpen] = useState(false);
+  const menuRef = useRef(null);
+  const [isOpen, setOpen] = useState(false);
 	
-	useOutsideClick(menuRef, () => setOpen(false));
+  useOutsideClick(menuRef, () => setOpen(false));
 	
-	return (
-		<MenuWrapper ref={menuRef}>
-			<MenuIcon className='icon-menu' onClick={() => setOpen(!isOpen)} vertical={vertical} isOpen={isOpen}/>
-			{isOpen && (
-				<MenuContent>
-					{children}
-				</MenuContent>
-			)}
-		</MenuWrapper>
-	);
+  return (
+    <MenuWrapper ref={menuRef}>
+      <MenuIcon className='icon-menu' onClick={() => setOpen(!isOpen)} vertical={vertical} isOpen={isOpen}/>
+      {isOpen && (
+        <MenuContent>
+          {children}
+        </MenuContent>
+      )}
+    </MenuWrapper>
+  );
 };

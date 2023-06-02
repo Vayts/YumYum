@@ -7,12 +7,12 @@ import { createRecipeSlice } from '@src/store/createRecipe/reducer';
 
 const sagaMiddleware = createSagaMiddleware();
 export const store = configureStore({
-	reducer: {
-		user: userSlice.reducer,
-		modal: modalSlice.reducer,
-		createRecipe: createRecipeSlice.reducer,
-	},
-	middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware),
+  reducer: {
+    user: userSlice.reducer,
+    modal: modalSlice.reducer,
+    createRecipe: createRecipeSlice.reducer,
+  },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware),
 });
 
 sagaMiddleware.run(rootSaga);
