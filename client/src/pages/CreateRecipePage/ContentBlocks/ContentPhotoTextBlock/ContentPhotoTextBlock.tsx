@@ -87,7 +87,7 @@ export const ContentPhotoTextBlock: React.FC<IContentPhotoTextBlockProps> = ({ c
 							onChange={(e) => openEditPhoto(e)}
 							name='photo'
 							value={photo ? URL.createObjectURL(photo) : null}
-							margin='0'
+							margin='0 0 1px'
 						/>
 					</ContentPhotoTextBlockImgHolder>
 					<Input
