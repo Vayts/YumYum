@@ -6,8 +6,8 @@ export interface IContentFiller {
 export interface IContentBlock {
 	id: string,
 	type: string,
-  errors: Record<string, string>,
-  touched: Record<string, boolean>,
+    errors: Record<string, string>,
+    touched: Record<string, boolean>,
 	content: IPhotoContentBlock | IPhotoTextContentBlock | ITextContentBlock,
 }
 
@@ -20,7 +20,7 @@ export interface IPhotoTextContentBlock {
 	photo: Blob | MediaSource | null,
 	photoPosition: 'right' | 'left'
 	photoDescription: string,
-	title: string,
+    title: string,
 	description: string,
 }
 
