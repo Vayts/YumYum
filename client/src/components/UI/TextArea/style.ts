@@ -10,9 +10,10 @@ export const TextAreaWrapper = styled.div<ITextAreaStyle>`
   height: ${({ height = 'auto' }) => height};
 `;
 
-export const TextAreaLabel = styled.label`
+export const TextAreaLabel = styled.label<ITextAreaStyle>`
 	margin-bottom: 10px;
 	font-size: inherit;
+  color: ${({ theme, isValid }) => (isValid ? 'inherit' : theme.dangerColor)};
 `;
 
 export const TextAreaElemWrapper = styled.div`
@@ -34,7 +35,7 @@ export const TextAreaElem = styled.textarea<ITextAreaStyle>`
 	
 	&:focus {
 		outline: none;
-		border-color: ${({ theme, isValid }) => (isValid ? theme.primaryColor : theme.dangerColor)};
+		border-color: ${({ theme, isValid }) => (isValid ? theme.blackColor : theme.dangerColor)};
 	}
 	
 	&::placeholder {

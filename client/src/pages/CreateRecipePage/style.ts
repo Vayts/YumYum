@@ -23,17 +23,13 @@ export const CreateRecipeMainInfo = styled.div`
 	display: flex;
 `;
 
-export const CreateRecipeImg = styled.div`
-  width: 450px;
-  height: 281px;
-  border: 1px solid #E2E8F0;
-`;
-
 export const CreateRecipeImgWrapper = styled.div`
   margin-right: 20px;
   width: 450px;
   height: 281px;
 `;
+
+export const CreateRecipeImgContentWrapper = styled.div``;
 
 export const CreateRecipeMainInputs = styled.div`
 	flex-grow: 1;

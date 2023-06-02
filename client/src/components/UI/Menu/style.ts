@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 import { scaleAppear } from '@constants/animations';
-import { IMenuStyle } from '@src/components/UI/Menu/types';
+import { IMenuItemStyle, IMenuStyle } from '@src/components/UI/Menu/types';
 
 export const MenuWrapper = styled.div`
   position: relative;
@@ -19,6 +19,12 @@ export const MenuIcon = styled.span<IMenuStyle>`
 	transition: all 0.2s;
 	background-color: ${({ isOpen, theme }) => (isOpen ? theme.greyLight : 'transparent')};
 	transform: rotate(${({ vertical }) => (vertical ? '90deg' : '0')});
+	color: ${({ theme }) => theme.subTxtColor};
+	
+	&:hover {
+		cursor: pointer;
+		color: ${({ theme }) => theme.blackColor};
+	}
 `;
 
 export const MenuContent = styled.div<IMenuStyle>`
@@ -27,7 +33,10 @@ export const MenuContent = styled.div<IMenuStyle>`
 	background-color: ${({ theme }) => theme.componentBg};
 	box-shadow: ${({ theme }) => theme.modalShadow};
 	min-width: 200px;
-	top: 50%;
+  border-radius: 5px;
+	border: 1px solid ${({ theme }) => theme.greyColor};
+	overflow: hidden;
+	top: 90%;
   animation: ${scaleAppear} 0.05s linear;
 	
 	${({ left }) => {
@@ -37,7 +46,35 @@ export const MenuContent = styled.div<IMenuStyle>`
 			`;
 		}
 		return css`
-      right: 100%;
+      right: 0;
 		`;
+	}}
+`;
+
+export const MenuList = styled.ul`
+	margin: 0;
+	padding: 0;
+	list-style: none;
+`;
+
+export const MenuItem = styled.li<IMenuItemStyle>`
+	padding: 10px;
+	
+	&:hover {
+		cursor: pointer;
+		transition: all 0.1s;
+		background-color: ${({ theme }) => theme.greyLight};
+	}
+	
+	${({ isDanger, theme }) => {
+		if (isDanger) {
+			return css`
+				color: ${theme.dangerColor};
+				
+				&:hover {
+          background-color: ${theme.dangerColor}20;
+				}
+			`;
+		}
 	}}
 `;

@@ -13,22 +13,26 @@ import {
 } from '@src/pages/CreateRecipePage/IngredientsBlock/style';
 import { v4 as uuidv4 } from 'uuid';
 import { IIngredientsBlock } from '@src/pages/CreateRecipePage/IngredientsBlock/types';
+import { useTheme } from 'styled-components';
+import { THEMES } from '@constants/themes';
+import { createRecipeIngredientValidation } from '@src/validation/createRecipe.validation';
+import { ErrorMsg } from '@src/components/UI/ErrorMsg/ErrorMsg';
 
 export const IngredientsBlock: React.FC<IIngredientsBlock> = ({ setIngredients, ingredients }) => {
+	const { dangerColor } = useTheme() as typeof THEMES.light;
 	const { t } = useTranslation();
 	
 	const addNewIngredient = () => {
 		setIngredients((state) => state.concat({
 			id: uuidv4(),
 			value: '',
+			touched: false,
+			errors: {},
 		}));
 	};
 	
 	useEffect(() => {
-		setIngredients((state) => state.concat({
-			id: uuidv4(),
-			value: '',
-		}));
+		addNewIngredient();
 	}, []);
 	
 	const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -37,6 +41,8 @@ export const IngredientsBlock: React.FC<IIngredientsBlock> = ({ setIngredients, 
 				return {
 					...item,
 					value: e.target.value,
+					errors: createRecipeIngredientValidation(e.target.value),
+					touched: true,
 				};
 			}
 			return item;
@@ -74,9 +80,11 @@ export const IngredientsBlock: React.FC<IIngredientsBlock> = ({ setIngredients, 
 			<Title fz={18} fw={500} margin='0 0 20px'>{t('ingredients')}</Title>
 			<Description>{t('ingredientsText')}</Description>
 			{ingredients.map((item, index) => {
+				const isValid = item.touched ? item.touched && !item.errors.ingredients : true;
+        
 				return (
 					<div key={item.id}>
-						<Title fz={15}>{`${t('ingredient')} #${index + 1}`}</Title>
+						<Title color={!isValid ? dangerColor : 'inherit'} fz={15}>{`${t('ingredient')} #${index + 1}`}</Title>
 						<IngredientsInputWrapper>
 							<IngredientsIconsWrapper>
 								<IngredientsOrderIcon className='icon-up' isDisabled={index === 0} onClick={() => changePositionUp(index)}/>
@@ -91,6 +99,7 @@ export const IngredientsBlock: React.FC<IIngredientsBlock> = ({ setIngredients, 
 									height='35px'
 									margin='0'
 									placeholder={`${t('ingredient')}`}
+									isValid={isValid}
 								/>
 							</IngredientsInputElemWrapper>
 							<IngredientsIcon
@@ -99,7 +108,7 @@ export const IngredientsBlock: React.FC<IIngredientsBlock> = ({ setIngredients, 
 								onClick={() => deleteHandler(item.id)}
 							/>
 						</IngredientsInputWrapper>
-						
+						<ErrorMsg show={item.touched && !!item.errors.ingredients} margin='5px 0 0'>{item.errors.ingredients}</ErrorMsg>
 					</div>
 					
 				);

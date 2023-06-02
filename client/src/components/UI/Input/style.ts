@@ -9,9 +9,10 @@ export const InputWrapper = styled.div<IInputStyle>`
   font-size: ${({ fz = 16 }) => `${fz}px`};
 `;
 
-export const InputLabel = styled.label`
+export const InputLabel = styled.label<IInputStyle>`
 	margin-bottom: 10px;
 	font-size: inherit;
+	color: ${({ theme, isValid }) => (isValid ? 'inherit' : theme.dangerColor)};
 `;
 
 export const InputElemWrapper = styled.div`
@@ -30,7 +31,7 @@ export const InputElem = styled.input<IInputStyle>`
 	
 	&:focus {
 		outline: none;
-		border-color: ${({ theme, isValid }) => (isValid ? theme.primaryColor : theme.dangerColor)};
+		border-color: ${({ theme, isValid }) => (isValid ? theme.blackColor : theme.dangerColor)};
 	}
 	
 	&::placeholder {
