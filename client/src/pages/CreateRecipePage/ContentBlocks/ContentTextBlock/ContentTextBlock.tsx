@@ -21,6 +21,7 @@ export const ContentTextBlock: React.FC<IContentTextBlockProps> = ({ onChangeHan
       <Description>{t('contentTextBlockWarning')}</Description>
       <Input
         margin='15px 0 5px'
+        placeholder={`${t('title')} (${t('optionalІSmall')})`}
         label={`${t('title')} (${t('optionalІSmall')})`}
         id={`contentBlock${id}Title`}
         name='title'
@@ -32,6 +33,7 @@ export const ContentTextBlock: React.FC<IContentTextBlockProps> = ({ onChangeHan
       <ErrorMsg show={touched.title && !!errors.title} margin='5px 0 0'>{errors.title}</ErrorMsg>
       <TextArea
         margin='5px 0 10px'
+        placeholder={t('text')}
         label={t('text')}
         id={`contentBlock${id}Description`}
         name='description'

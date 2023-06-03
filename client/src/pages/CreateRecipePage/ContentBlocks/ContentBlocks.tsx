@@ -104,7 +104,7 @@ export const ContentBlocks: React.FC<IContentBlocks> = ({ setContentBlocks, cont
         <Button
           clickHandler={() => setModalOpen(true)}
           width='100%'
-          text={t('addContentBlock')}
+          text={contentBlocks.length < 2 ? `${t('addContentBlock')} (${t('atLeastSmall', { value: 2 })})` : t('addContentBlock')}
           margin='20px 0'
           padding='15px 0'
         />

@@ -12,6 +12,8 @@ import { IIngredientItem } from '@src/store/createRecipe/types';
 import { ContentBlocks } from '@src/pages/CreateRecipePage/ContentBlocks/ContentBlocks';
 import { IContentBlock } from '@src/types/contentBlocks.types';
 import { ICreateRecipeMainInfo } from '@src/pages/CreateRecipePage/CreateRecipeMain/types';
+import { createRecipeFullFormValidate } from '@src/validation/createRecipe.validation';
+import { getNotification } from '@src/notification/notifications';
 
 export const CreateRecipePage: React.FC = () => {
   const [mainInfo, setMainInfo] = useState<ICreateRecipeMainInfo>({
@@ -27,6 +29,10 @@ export const CreateRecipePage: React.FC = () => {
 	
   const submitHandler = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
+    const validationResult = createRecipeFullFormValidate(mainInfo, ingredients, contentBlocks);
+    if (validationResult) {
+      getNotification('Рецепт отправлен на проверку');
+    }
   };
 	
   return (

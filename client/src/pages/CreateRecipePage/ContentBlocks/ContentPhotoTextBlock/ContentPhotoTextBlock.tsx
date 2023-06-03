@@ -20,17 +20,16 @@ import { EditPhoto } from '@src/components/EditPhoto/EditPhoto';
 import { ErrorMsg } from '@src/components/UI/ErrorMsg/ErrorMsg';
 import { IPhotoTextContentBlock } from '@src/types/contentBlocks.types';
 
-export const ContentPhotoTextBlock: React.FC<IContentPhotoTextBlockProps> = ({
-  contentBlock,
-  onChangeHandler,
-}) => {
+export const ContentPhotoTextBlock: React.FC<IContentPhotoTextBlockProps> = ({ contentBlock, onChangeHandler }) => {
   const [editPhotoState, setEditPhoto] = useState<IEditPhotoState>({
     isOpen: false,
     photo: null,
+    photoBlob: null,
     width: 400,
     height: 400,
     border: 60,
     saveFunc: null,
+    photoName: contentBlock.id,
   });
   const {
     content,
@@ -50,17 +49,18 @@ export const ContentPhotoTextBlock: React.FC<IContentPhotoTextBlockProps> = ({
   const setPhotoHandler = (photo: any) => {
     onChangeHandler('photo', photo, id);
   };
-    
+  
   const openEditPhoto = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target?.files && e.target.files[0]) {
-      const value = URL.createObjectURL(e.target.files[0]);
+    if (e.target && e.target.files && e.target.files[0]) {
+      const photo = e.target.files[0];
+      const photoBlob = URL.createObjectURL(photo);
       setEditPhoto((state) => {
         return {
           ...state,
-          photo: value,
+          photo,
+          photoBlob,
           isOpen: true,
-          saveFunc: setPhotoHandler,
-        };
+          saveFunc: setPhotoHandler };
       });
       return true;
     }
@@ -135,7 +135,7 @@ export const ContentPhotoTextBlock: React.FC<IContentPhotoTextBlockProps> = ({
             value={title}
             margin="0"
             onChange={(e) => onChangeHandler(e.target.name, e.target.value, id)}
-            placeholder={t('title')}
+            placeholder={`${t('title')} (${t('optionalІSmall')})`}
             fz={16}
             max={100}
             padding="10px"
