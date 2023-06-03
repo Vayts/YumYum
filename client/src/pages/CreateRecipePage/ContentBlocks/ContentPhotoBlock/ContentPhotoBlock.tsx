@@ -13,10 +13,12 @@ export const ContentPhotoBlock: React.FC<IContentPhotoBlockProps> = ({ contentBl
   const [editPhotoState, setEditPhoto] = useState<IEditPhotoState>({
     isOpen: false,
     photo: null,
+    photoBlob: null,
     width: 512,
     height: 200,
     border: 60,
     saveFunc: null,
+    photoName: contentBlock.id,
   });
   const { content, id, touched, errors } = contentBlock;
   const { photoDescription, photo } = content as IPhotoContentBlock;
@@ -25,12 +27,18 @@ export const ContentPhotoBlock: React.FC<IContentPhotoBlockProps> = ({ contentBl
   const setPhotoHandler = (photo: any) => {
     onChangeHandler('photo', photo, id);
   };
-	
+  
   const openEditPhoto = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target?.files && e.target.files[0]) {
-      const value = URL.createObjectURL(e.target.files[0]);
+    if (e.target && e.target.files && e.target.files[0]) {
+      const photo = e.target.files[0];
+      const photoBlob = URL.createObjectURL(photo);
       setEditPhoto((state) => {
-        return { ...state, photo: value, isOpen: true, saveFunc: setPhotoHandler };
+        return {
+          ...state,
+          photo,
+          photoBlob,
+          isOpen: true,
+          saveFunc: setPhotoHandler };
       });
       return true;
     }

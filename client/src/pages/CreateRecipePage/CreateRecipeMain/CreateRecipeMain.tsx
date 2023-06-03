@@ -16,15 +16,18 @@ import { IEditPhotoState } from '@src/components/EditPhoto/types';
 import { ICreateRecipeMain } from '@src/pages/CreateRecipePage/CreateRecipeMain/types';
 import { createRecipeMainInfoValidation } from '@src/validation/createRecipe.validation';
 import { ErrorMsg } from '@src/components/UI/ErrorMsg/ErrorMsg';
+import { v4 as uuidv4 } from 'uuid';
 
 export const CreateRecipeMain: React.FC<ICreateRecipeMain> = ({ mainInfo, setMainInfo }) => {
   const [editPhotoState, setEditPhoto] = useState<IEditPhotoState>({
     isOpen: false,
     photo: null,
+    photoBlob: null,
     width: 450,
     height: 281,
     border: 60,
     saveFunc: null,
+    photoName: uuidv4(),
   });
   const { photo, touched, title, description, errors } = mainInfo;
   const { t } = useTranslation();
@@ -56,12 +59,18 @@ export const CreateRecipeMain: React.FC<ICreateRecipeMain> = ({ mainInfo, setMai
       };
     });
   };
-	
+  
   const openEditPhoto = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target?.files && e.target.files[0]) {
-      const value = URL.createObjectURL(e.target.files[0]);
+    if (e.target && e.target.files && e.target.files[0]) {
+      const photo = e.target.files[0];
+      const photoBlob = URL.createObjectURL(photo);
       setEditPhoto((state) => {
-        return { ...state, photo: value, isOpen: true, saveFunc: setMainPhotoHandler };
+        return {
+          ...state,
+          photo,
+          photoBlob,
+          isOpen: true,
+          saveFunc: setMainPhotoHandler };
       });
       return true;
     }

@@ -3,6 +3,8 @@ import { DEFAULT_REGEX_EXP } from '@constants/regex';
 import { ICreateRecipeMainInfo } from '@src/pages/CreateRecipePage/CreateRecipeMain/types';
 import { IContentBlock, IPhotoContentBlock, IPhotoTextContentBlock, ITextContentBlock } from '@src/types/contentBlocks.types';
 import { CONTENT_BLOCK_TYPES } from '@constants/contentBlocks';
+import { IIngredientItem } from '@src/store/createRecipe/types';
+import { getNotification } from '@src/notification/notifications';
 
 const { t } = i18n;
 
@@ -56,13 +58,25 @@ function createRecipeMainDescriptionValidation(str: string): Record<string, stri
   return errors;
 }
 
+function createRecipeMainInfoPhotoValidation(photo: Blob | MediaSource | null): Record<string, string> {
+  const errors: Record<string, string> = {};
+  
+  if (!photo) {
+    errors.photo = t('requiredField');
+    return errors;
+  }
+  return errors;
+}
+
 export function createRecipeMainInfoValidation(mainInfo: ICreateRecipeMainInfo): Record<string, string> {
   const titleValidation: Record<string, string> = createRecipeMainTitleValidation(mainInfo.title);
   const descriptionValidation: Record<string, string> = createRecipeMainDescriptionValidation(mainInfo.description);
+  const photoValidation: Record<string, string> = createRecipeMainInfoPhotoValidation(mainInfo.photo);
   
   return {
     ...titleValidation,
     ...descriptionValidation,
+    ...photoValidation,
   };
 }
 
@@ -93,6 +107,10 @@ export function createRecipeIngredientValidation(str: string): Record<string, st
 
 function createRecipeContentBlockTitleValidation(str: string): Record<string, string> {
   const errors: Record<string, string> = {};
+  
+  if (!str) {
+    return errors;
+  }
 
   if (!DEFAULT_REGEX_EXP.test(str)) {
     errors.title = t('incorrectValue');
@@ -144,6 +162,10 @@ export function createRecipeTextBlockTotalValidation(content: ITextContentBlock)
 
 function createRecipeContentBlockPhotoDescriptionValidation(str: string): Record<string, string> {
   const errors: Record<string, string> = {};
+  
+  if (!str) {
+    return errors;
+  }
 
   if (!DEFAULT_REGEX_EXP.test(str)) {
     errors.photoDescription = t('incorrectValue');
@@ -196,4 +218,42 @@ export function contentBlockValidation(contentBlock: IContentBlock): Record<stri
   }
 
   return errors;
+}
+
+export function createRecipeFullFormValidate(
+  mainInfo: ICreateRecipeMainInfo,
+  ingredients: IIngredientItem[],
+  contentBlocks: IContentBlock[],
+): boolean {
+  console.log(mainInfo.photo);
+  const mainInfoValidate = createRecipeMainInfoValidation(mainInfo);
+  if (Object.values(mainInfoValidate).length > 0) {
+    getNotification(`${t('errorIn', { value: t('mainInfo') })}`, 'error');
+    return false;
+  }
+  
+  const ingredientsValidate = ingredients.map((item) => {
+    return Object.values(createRecipeIngredientValidation(item.value)).length > 0;
+  });
+
+  if (ingredientsValidate.includes(true)) {
+    getNotification(`${t('errorIn', { value: `${t('ingredient')} #${ingredientsValidate.indexOf(true) + 1}` })}`, 'error');
+    return false;
+  }
+  
+  if (contentBlocks.length < 2) {
+    getNotification(t('atLeast2ContentBlocks'), 'error');
+    return false;
+  }
+  
+  const contentBlocksValidate: boolean[] = contentBlocks.map((item) => {
+    return Object.values(contentBlockValidation(item)).length > 0;
+  });
+  
+  if (contentBlocksValidate.includes(true)) {
+    getNotification(`${t('errorIn', { value: `${t('contentBlockNumber', { value: contentBlocksValidate.indexOf(true) + 1 })}` })}`, 'error');
+    return false;
+  }
+  
+  return true;
 }

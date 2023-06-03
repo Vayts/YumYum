@@ -9,7 +9,7 @@ import { getNotification } from '@src/notification/notifications';
 import { hideScrollbar, showScrollbar } from '@helpers/visual.helper';
 
 export const EditPhoto: React.FC<IEditPhoto> = ({ state, setState }) => {
-  const { photo, height, width, saveFunc, border, photoName } = state;
+  const { photo, photoBlob, height, width, saveFunc, border, photoName } = state;
   const [isLoading, setLoading] = useState(false);
   const [scale, setScale] = useState(1.1);
   const editor = useRef<AvatarEditor>(null);
@@ -59,7 +59,7 @@ export const EditPhoto: React.FC<IEditPhoto> = ({ state, setState }) => {
       const canvas = editor.current.getImage().toDataURL();
       fetch(canvas).then((res) => res.blob())
         .then((blob) => {
-          const type = photo ? photo.split('.').pop() : '.jpg';
+          const type = photo ? photo.name.split('.').pop() : '.jpg';
           const name = photoName || '';
           const result = new File([blob], name, { type: `image/${type}`, lastModified: new Date().getTime() });
 					
@@ -86,7 +86,7 @@ export const EditPhoto: React.FC<IEditPhoto> = ({ state, setState }) => {
         >
           <AvatarEditor
             ref={editor}
-            image={photo || ''}
+            image={photoBlob || ''}
             width={width || 600}
             height={height || 337}
             border={border || 30}
