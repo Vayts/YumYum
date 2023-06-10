@@ -1,49 +1,49 @@
-import React, { useState } from 'react';
-import {
-  CreateRecipeTitle,
-  CreateRecipeWrapper,
-} from '@src/pages/CreateRecipePage/style';
-import { Title } from '@src/components/UI/Title/Title';
-import { Button } from '@src/components/UI/Button/Button';
+import React, { memo, useState } from 'react';
+import Title from '@src/components/UI/Title/Title';
+import Button from '@src/components/UI/Button/Button';
+import { CreateRecipeTitle } from '@src/pages/CreateRecipePage/style';
 import { useTranslation } from 'react-i18next';
-import { CreateRecipeMain } from '@src/pages/CreateRecipePage/CreateRecipeMain/CreateRecipeMain';
-import { IngredientsBlock } from '@src/pages/CreateRecipePage/IngredientsBlock/IngredientsBlock';
-import { IIngredientItem } from '@src/store/createRecipe/types';
-import { ContentBlocks } from '@src/pages/CreateRecipePage/ContentBlocks/ContentBlocks';
-import { IContentBlock } from '@src/types/contentBlocks.types';
-import { ICreateRecipeMainInfo } from '@src/pages/CreateRecipePage/CreateRecipeMain/types';
+import { ICreateRecipeContentBlock, ICreateRecipeIngredient, ICreateRecipeMain } from '@src/types/createRecipe.types';
+import MainInfoBlock from '@src/pages/CreateRecipePage/MainInfoBlock/MainInfoBlock';
+import IngredientsBlock from '@src/pages/CreateRecipePage/IngredientsBlock/IngredientsBlock';
+import ContentBlocks from '@src/pages/CreateRecipePage/ContentBlocks/ContentBlocks';
 import { createRecipeFullFormValidate } from '@src/validation/createRecipe.validation';
-import { getNotification } from '@src/notification/notifications';
+import { getCreateRecipeDto } from '@helpers/createRecipe.helper';
 
-export const CreateRecipePage: React.FC = () => {
-  const [mainInfo, setMainInfo] = useState<ICreateRecipeMainInfo>({
-    photo: null,
-    title: '',
-    description: '',
-    errors: {},
-    touched: {},
-  });
-  const [ingredients, setIngredients] = useState<IIngredientItem[]>([]);
-  const [contentBlocks, setContentBlocks] = useState<IContentBlock[]>([]);
+const mainInfoInitial: ICreateRecipeMain = {
+  title: '',
+  description: '',
+  errors: {},
+  touched: {},
+  photo: null,
+};
+
+const CreateRecipePage: React.FC = () => {
+  const [mainInfo, setMainInfo] = useState<ICreateRecipeMain>(mainInfoInitial);
+  const [ingredients, setIngredients] = useState<ICreateRecipeIngredient[]>([]);
+  const [contentBlocks, setContentBlocks] = useState<ICreateRecipeContentBlock[]>([]);
   const { t } = useTranslation();
-	
+  
   const submitHandler = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
-    const validationResult = createRecipeFullFormValidate(mainInfo, ingredients, contentBlocks);
-    if (validationResult) {
-      getNotification('Рецепт отправлен на проверку');
+    if (createRecipeFullFormValidate(mainInfo, ingredients, contentBlocks)) {
+      getCreateRecipeDto(mainInfo, ingredients, contentBlocks);
     }
   };
-	
+  
   return (
-    <CreateRecipeWrapper>
+    <div>
+      {/*<form>*/}
       <CreateRecipeTitle>
         <Title fz={25} fw={600}>{t('createRecipe')}</Title>
-        <Button margin='0' padding='10px 10px' clickHandler={(e) => submitHandler(e)} text={t('publish')} type='submit'/>
+        <Button margin='0' padding='10px 10px' clickHandler={submitHandler} text={t('publish')} type='submit'/>
       </CreateRecipeTitle>
-      <CreateRecipeMain mainInfo={mainInfo} setMainInfo={setMainInfo}/>
+      <MainInfoBlock mainInfo={mainInfo} setMainInfo={setMainInfo}/>
       <IngredientsBlock ingredients={ingredients} setIngredients={setIngredients}/>
       <ContentBlocks contentBlocks={contentBlocks} setContentBlocks={setContentBlocks}/>
-    </CreateRecipeWrapper>
+      {/*</form>*/}
+    </div>
   );
 };
+
+export default memo(CreateRecipePage);

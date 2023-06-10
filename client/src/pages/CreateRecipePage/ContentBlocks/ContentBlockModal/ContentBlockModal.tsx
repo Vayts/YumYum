@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { Button } from '@src/components/UI/Button/Button';
+import Button from '@src/components/UI/Button/Button';
 import { CONTENT_BLOCKS } from '@constants/contentBlocks';
 import { useTranslation } from 'react-i18next';
-import { IContentBlock } from '@src/types/contentBlocks.types';
-import { IContentBlockModal } from '@src/pages/CreateRecipePage/ContentBlocks/ContentBlockModal/types';
+import { IContentBlockModals } from '@src/pages/CreateRecipePage/ContentBlocks/ContentBlockModal/types';
 import { hideScrollbar, showScrollbar } from '@helpers/visual.helper';
 import { v4 as uuidv4 } from 'uuid';
+import { ICreateRecipeContentBlock } from '@src/types/createRecipe.types';
 import {
   ContentBlockButtons,
   ContentBlockModalDialog, ContentBlockModalItem,
   ContentBlockModalList, ContentBlockModalRadio, ContentBlockModalRadioLabel, ContentBlockModalWrapper,
 } from './style';
 
-export const ContentBlockModal: React.FC<IContentBlockModal> = ({ setContentBlocks, setModalOpen, contentBlocks }) => {
-  const [contentBlockType, setContentBlockType] = useState<IContentBlock | null>(null);
+export const ContentBlockModal: React.FC<IContentBlockModals> = ({ setContentBlocks, setModalOpen }) => {
+  const [contentBlockType, setContentBlockType] = useState<ICreateRecipeContentBlock | null>(null);
   const { t } = useTranslation();
 	
   useEffect(() => {
@@ -34,7 +34,9 @@ export const ContentBlockModal: React.FC<IContentBlockModal> = ({ setContentBloc
         touched: {},
       };
 			
-      setContentBlocks([...contentBlocks, newBlock]);
+      setContentBlocks((prev) => {
+        return [...prev, newBlock];
+      });
       setModalOpen(false);
     }
   };

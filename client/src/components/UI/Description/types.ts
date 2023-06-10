@@ -1,7 +1,10 @@
+import React from 'react';
+
 export interface IDescription {
-	fz?: numbers,
+	fz?: number,
 	margin?: string,
 	color?: string,
 	height?: string,
 	align?: 'center' | 'left' | 'right',
+    children?: React.ReactNode,
 }

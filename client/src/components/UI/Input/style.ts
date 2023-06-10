@@ -23,21 +23,21 @@ export const InputElem = styled.input<IInputStyle>`
   height: ${({ height = 'auto' }) => height};
   padding: ${({ padding = '10px 30px 10px 20px' }) => padding};
   font-size: ${({ fz = 16 }) => `${fz}px`};
-	width: 100%;
-	border: 1px solid ${({ isValid, theme }) => (isValid ? '#E2E8F0' : theme.dangerColor)};
-	background-color: transparent;
-	border-radius: 5px;
-	transition: all 0.2s;
+  width: 100%;
+  border: 1px solid ${({ isValid, theme }) => (isValid ? '#E2E8F0' : theme.dangerColor)};
+  background-color: transparent;
+  border-radius: 5px;
+  transition: all 0.2s;
 	
-	&:focus {
-		outline: none;
-		border-color: ${({ theme, isValid }) => (isValid ? theme.blackColor : theme.dangerColor)};
-	}
+  &:focus {
+    outline: none;
+    border-color: ${({ theme, isValid }) => (isValid ? theme.blackColor : theme.dangerColor)};
+  }
 	
-	&::placeholder {
+  &::placeholder {
     font-size: ${({ fz = 16 }) => `${fz}px`};
-		color: ${({ theme }) => theme.reverseLight};
-	}
+    color: ${({ theme }) => theme.reverseLight};
+  }
 `;
 
 export const InputSecureIcon = styled.div`

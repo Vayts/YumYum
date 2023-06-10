@@ -9,7 +9,7 @@ import { useAppSelector } from '@src/hooks/hooks';
 import { Layout } from '@hoc/Layout/Layout';
 import { Modal } from '@src/components/Modal/Modal';
 import { selectModalType } from '@src/store/modal/selectors';
-import { CreateRecipePage } from '@src/pages/CreateRecipePage/CreateRecipePage';
+import CreateRecipePage from '@src/pages/CreateRecipePage/CreateRecipePage';
 import { AppWrapper } from './style';
 
 export const App: React.FC = () => {

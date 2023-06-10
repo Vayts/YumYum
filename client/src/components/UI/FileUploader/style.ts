@@ -3,7 +3,7 @@ import { IFileUploaderStyle } from '@src/components/UI/FileUploader/types';
 
 export const FileUploaderWrapper = styled.label<IFileUploaderStyle>`
   position: relative;
-	display: block;
+  display: block;
   margin: ${({ margin = '5px 0' }) => margin};
   width: ${({ width = '100%' }) => width};
   height: ${({ height = '100%' }) => height};

@@ -1,3 +1,5 @@
+import React from 'react';
+
 export interface ITitle {
 	fz?: number,
 	margin?: string,
@@ -5,4 +7,5 @@ export interface ITitle {
 	height?: string,
 	align?: 'center' | 'right' | 'left',
 	fw?: number,
+    children: React.ReactNode;
 }

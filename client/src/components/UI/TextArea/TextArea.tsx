@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { ITextArea } from '@src/components/UI/TextArea/types';
 import { TextAreaElem, TextAreaElemWrapper, TextAreaLabel, TextAreaWrapper } from '@src/components/UI/TextArea/style';
 
-export const TextArea: React.FC<ITextArea> = (props) => {
+const TextArea: React.FC<ITextArea> = (props) => {
   const {
     height,
     padding,
@@ -26,7 +26,7 @@ export const TextArea: React.FC<ITextArea> = (props) => {
       <TextAreaElemWrapper>
         <TextAreaElem
           name={name}
-          onChange={(e) => onChange(e)}
+          onChange={onChange}
           value={value}
           placeholder={placeholder as string}
           height={height}
@@ -42,3 +42,5 @@ export const TextArea: React.FC<ITextArea> = (props) => {
     </TextAreaWrapper>
   );
 };
+
+export default memo(TextArea);

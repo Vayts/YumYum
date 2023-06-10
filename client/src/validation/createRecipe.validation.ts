@@ -1,10 +1,8 @@
 import i18n from 'i18next';
 import { DEFAULT_REGEX_EXP } from '@constants/regex';
-import { ICreateRecipeMainInfo } from '@src/pages/CreateRecipePage/CreateRecipeMain/types';
-import { IContentBlock, IPhotoContentBlock, IPhotoTextContentBlock, ITextContentBlock } from '@src/types/contentBlocks.types';
-import { CONTENT_BLOCK_TYPES } from '@constants/contentBlocks';
-import { IIngredientItem } from '@src/store/createRecipe/types';
+import { ICreateRecipeContentBlock, ICreateRecipeIngredient, ICreateRecipeMain } from '@src/types/createRecipe.types';
 import { getNotification } from '@src/notification/notifications';
+import { CONTENT_BLOCK_TYPES } from '@constants/contentBlocks';
 
 const { t } = i18n;
 
@@ -68,7 +66,7 @@ function createRecipeMainInfoPhotoValidation(photo: Blob | MediaSource | null): 
   return errors;
 }
 
-export function createRecipeMainInfoValidation(mainInfo: ICreateRecipeMainInfo): Record<string, string> {
+export function createRecipeMainInfoValidation(mainInfo: ICreateRecipeMain): Record<string, string> {
   const titleValidation: Record<string, string> = createRecipeMainTitleValidation(mainInfo.title);
   const descriptionValidation: Record<string, string> = createRecipeMainDescriptionValidation(mainInfo.description);
   const photoValidation: Record<string, string> = createRecipeMainInfoPhotoValidation(mainInfo.photo);
@@ -107,7 +105,7 @@ export function createRecipeIngredientValidation(str: string): Record<string, st
 
 function createRecipeContentBlockTitleValidation(str: string): Record<string, string> {
   const errors: Record<string, string> = {};
-  
+
   if (!str) {
     return errors;
   }
@@ -150,7 +148,7 @@ function createRecipeContentBlockDescriptionValidation(str: string): Record<stri
   return errors;
 }
 
-export function createRecipeTextBlockTotalValidation(content: ITextContentBlock): Record<string, string> {
+export function createRecipeTextBlockTotalValidation(content: ICreateRecipeContentBlock['content']): Record<string, string> {
   const titleValidation: Record<string, string> = createRecipeContentBlockTitleValidation(content.title);
   const descriptionValidation: Record<string, string> = createRecipeContentBlockDescriptionValidation(content.description);
 
@@ -162,7 +160,7 @@ export function createRecipeTextBlockTotalValidation(content: ITextContentBlock)
 
 function createRecipeContentBlockPhotoDescriptionValidation(str: string): Record<string, string> {
   const errors: Record<string, string> = {};
-  
+
   if (!str) {
     return errors;
   }
@@ -179,7 +177,7 @@ function createRecipeContentBlockPhotoDescriptionValidation(str: string): Record
   return {};
 }
 
-export function createRecipePhotoTextBlockTotalValidation(content: IPhotoTextContentBlock): Record<string, string> {
+export function createRecipePhotoTextBlockTotalValidation(content: ICreateRecipeContentBlock['content']): Record<string, string> {
   const titleValidation: Record<string, string> = createRecipeContentBlockTitleValidation(content.title);
   const descriptionValidation: Record<string, string> = createRecipeContentBlockDescriptionValidation(content.description);
   const photoDescriptionValidation: Record<string, string> = createRecipeContentBlockPhotoDescriptionValidation(content.photoDescription);
@@ -191,7 +189,7 @@ export function createRecipePhotoTextBlockTotalValidation(content: IPhotoTextCon
   };
 }
 
-export function createRecipePhotoBlockTotalValidation(content: IPhotoContentBlock): Record<string, string> {
+export function createRecipePhotoBlockTotalValidation(content: ICreateRecipeContentBlock['content']): Record<string, string> {
   const photoDescriptionValidation: Record<string, string> = createRecipeContentBlockPhotoDescriptionValidation(content.photoDescription);
 
   return {
@@ -199,21 +197,21 @@ export function createRecipePhotoBlockTotalValidation(content: IPhotoContentBloc
   };
 }
 
-export function contentBlockValidation(contentBlock: IContentBlock): Record<string, string> {
+export function contentBlockValidation(contentBlock: ICreateRecipeContentBlock): Record<string, string> {
   let errors = {};
 
   if (contentBlock.type === CONTENT_BLOCK_TYPES.TEXT) {
-    errors = createRecipeTextBlockTotalValidation(contentBlock.content as ITextContentBlock);
+    errors = createRecipeTextBlockTotalValidation(contentBlock.content);
     return errors;
   }
 
   if (contentBlock.type === CONTENT_BLOCK_TYPES.PHOTO_TEXT) {
-    errors = createRecipePhotoTextBlockTotalValidation(contentBlock.content as IPhotoTextContentBlock);
+    errors = createRecipePhotoTextBlockTotalValidation(contentBlock.content);
     return errors;
   }
 
   if (contentBlock.type === CONTENT_BLOCK_TYPES.PHOTO) {
-    errors = createRecipePhotoBlockTotalValidation(contentBlock.content as IPhotoContentBlock);
+    errors = createRecipePhotoBlockTotalValidation(contentBlock.content);
     return errors;
   }
 
@@ -221,17 +219,16 @@ export function contentBlockValidation(contentBlock: IContentBlock): Record<stri
 }
 
 export function createRecipeFullFormValidate(
-  mainInfo: ICreateRecipeMainInfo,
-  ingredients: IIngredientItem[],
-  contentBlocks: IContentBlock[],
+  mainInfo: ICreateRecipeMain,
+  ingredients: ICreateRecipeIngredient[],
+  contentBlocks: ICreateRecipeContentBlock[],
 ): boolean {
-  console.log(mainInfo.photo);
   const mainInfoValidate = createRecipeMainInfoValidation(mainInfo);
   if (Object.values(mainInfoValidate).length > 0) {
     getNotification(`${t('errorIn', { value: t('mainInfo') })}`, 'error');
     return false;
   }
-  
+
   const ingredientsValidate = ingredients.map((item) => {
     return Object.values(createRecipeIngredientValidation(item.value)).length > 0;
   });
@@ -240,20 +237,20 @@ export function createRecipeFullFormValidate(
     getNotification(`${t('errorIn', { value: `${t('ingredient')} #${ingredientsValidate.indexOf(true) + 1}` })}`, 'error');
     return false;
   }
-  
+
   if (contentBlocks.length < 2) {
     getNotification(t('atLeast2ContentBlocks'), 'error');
     return false;
   }
-  
+
   const contentBlocksValidate: boolean[] = contentBlocks.map((item) => {
     return Object.values(contentBlockValidation(item)).length > 0;
   });
-  
+
   if (contentBlocksValidate.includes(true)) {
     getNotification(`${t('errorIn', { value: `${t('contentBlockNumber', { value: contentBlocksValidate.indexOf(true) + 1 })}` })}`, 'error');
     return false;
   }
-  
+
   return true;
 }

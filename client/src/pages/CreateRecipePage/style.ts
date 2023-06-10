@@ -1,42 +1,17 @@
 import styled from 'styled-components';
+import { memo } from 'react';
 
-export const CreateRecipeWrapper = styled.div`
-	margin-top: 15px;
-`;
-
-export const CreateRecipeTitle = styled.div`
+export const CreateRecipeTitle = memo(styled.div`
   border-bottom: 1px solid ${({ theme }) => theme.greyColor};
-	padding: 15px 0;
+  padding: 15px 0;
   display: flex;
-	justify-content: space-between;
-	align-items: center;
-`;
+  justify-content: space-between;
+  align-items: center;
+`);
 
 export const CreateRecipeBlock = styled.div`
-	margin-top: 25px;
+	margin: 20px 0;
 	box-shadow: ${({ theme }) => theme.softShadow};
 	background-color: ${({ theme }) => theme.componentBg};
 	padding: 20px 20px 40px;
-`;
-
-export const CreateRecipeMainInfo = styled.div`
-	display: flex;
-`;
-
-export const CreateRecipeImgWrapper = styled.div`
-  margin-right: 20px;
-  width: 450px;
-  height: 281px;
-`;
-
-export const CreateRecipeImgContentWrapper = styled.div``;
-
-export const CreateRecipeMainInputs = styled.div`
-	flex-grow: 1;
-	display: flex;
-	flex-direction: column;
-	
-	div:last-child {
-		flex-grow: 1;
-	}
 `;

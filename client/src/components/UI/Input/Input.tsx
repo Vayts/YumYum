@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { memo, useState } from 'react';
 import { IInput } from '@src/components/UI/Input/types';
 import { InputElem, InputElemWrapper, InputLabel, InputSecureIcon, InputWrapper } from '@src/components/UI/Input/style';
 
-export const Input: React.FC<IInput> = (props) => {
+const Input: React.FC<IInput> = (props) => {
   const {
     type,
     height,
@@ -26,7 +26,7 @@ export const Input: React.FC<IInput> = (props) => {
 	
   return (
     <InputWrapper margin={margin} width={width}>
-      {label ? <InputLabel htmlFor={id} isValid={isValid !== undefined ? isValid : true}>{label}</InputLabel> : null}
+      {label && <InputLabel htmlFor={id} isValid={isValid !== undefined ? isValid : true}>{label}</InputLabel>}
       <InputElemWrapper>
         <InputElem
           name={name}
@@ -58,3 +58,5 @@ export const Input: React.FC<IInput> = (props) => {
     </InputWrapper>
   );
 };
+
+export default memo(Input);
