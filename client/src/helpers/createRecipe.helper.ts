@@ -1,20 +1,51 @@
-import { ICreateRecipeMainInfo, ICreateRecipeMainInfoCompleted } from '@src/pages/CreateRecipePage/CreateRecipeMain/types';
-import { IIngredientItem } from '@src/store/createRecipe/types';
-import { IContentBlock } from '@src/types/contentBlocks.types';
+import { getPhotoFullName } from '@src/validation/app.helper';
+import { ICreateRecipeContentBlock, ICreateRecipeIngredient, ICreateRecipeMain } from '@src/types/createRecipe.types';
 
-export function getCreateRecipeDto(
-  mainInfo: ICreateRecipeMainInfoCompleted,
-  ingredients: IIngredientItem[],
-  contentBlocks: IContentBlock[],
-) {
-  const result = {
-    photos: [],
+// eslint-disable-next-line max-len
+export function getCreateRecipeDto(  
+  mainInfo: ICreateRecipeMain,
+  ingredients: ICreateRecipeIngredient[],
+  contentBlocks: ICreateRecipeContentBlock[],
+): any {
+  const result: any = {
+    photos: [mainInfo.photo as File],
     mainInfo: {
       title: mainInfo.title,
       description: mainInfo.description,
-      photo: mainInfo.photo,
+      photo: getPhotoFullName(mainInfo.photo as File),
     },
-    ingredients,
+    ingredients: [],
     contentBlocks: [],
   };
+  
+  ingredients.forEach((item) => {
+    result.ingredients.push({
+      id: item.id,
+      value: item.value,
+    });
+  });
+  
+  contentBlocks.forEach((item) => {
+    if (item.content?.photo) {
+      result.photos.push(item.content.photo as File);
+      result.contentBlocks.push({
+        id: item.id,
+        type: item.type,
+        content: {
+          ...item.content,
+          photo: getPhotoFullName(item.content.photo as File),
+        },
+      });
+    } else {
+      result.contentBlocks.push({
+        id: item.id,
+        type: item.type,
+        content: {
+          ...item.content,
+        },
+      });
+    }
+  });
+
+  return result;
 }

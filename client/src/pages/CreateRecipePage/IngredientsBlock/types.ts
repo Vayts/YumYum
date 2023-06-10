@@ -1,11 +1,7 @@
-import { IIngredientItem } from '@src/store/createRecipe/types';
+import { ICreateRecipeIngredient } from '@src/types/createRecipe.types';
 import React from 'react';
 
-export interface IIngredientsBlock {
-	ingredients: IIngredientItem[],
-	setIngredients: React.Dispatch<(state: IIngredientItem[]) => IIngredientItem[]>,
-}
-
-export interface IIngredientBlockIconStyle {
-	isDisabled: boolean,
+export interface IIngredientsBlockProps {
+  ingredients: ICreateRecipeIngredient[],
+  setIngredients: React.Dispatch<(state: ICreateRecipeIngredient[]) => ICreateRecipeIngredient[]>,
 }

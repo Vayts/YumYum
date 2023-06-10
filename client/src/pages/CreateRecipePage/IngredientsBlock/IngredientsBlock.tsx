@@ -1,121 +1,110 @@
-import React, { useEffect } from 'react';
+import React, { memo, useCallback, useEffect } from 'react';
+import { IIngredientsBlockProps } from '@src/pages/CreateRecipePage/IngredientsBlock/types';
 import { CreateRecipeBlock } from '@src/pages/CreateRecipePage/style';
-import { Title } from '@src/components/UI/Title/Title';
+import Description from '@src/components/UI/Description/Description';
 import { useTranslation } from 'react-i18next';
-import { Input } from '@src/components/UI/Input/Input';
-import { Button } from '@src/components/UI/Button/Button';
-import { Description } from '@src/components/UI/Description/Description';
-import {
-  IngredientsIcon,
-  IngredientsIconsWrapper,
-  IngredientsInputElemWrapper,
-  IngredientsInputWrapper, IngredientsOrderIcon,
-} from '@src/pages/CreateRecipePage/IngredientsBlock/style';
 import { v4 as uuidv4 } from 'uuid';
-import { IIngredientsBlock } from '@src/pages/CreateRecipePage/IngredientsBlock/types';
-import { useTheme } from 'styled-components';
-import { THEMES } from '@constants/themes';
+import Title from '@src/components/UI/Title/Title';
+import Button from '@src/components/UI/Button/Button';
+import IngredientItem from '@src/pages/CreateRecipePage/IngredientsBlock/IngredientItem/IngredientItem';
 import { createRecipeIngredientValidation } from '@src/validation/createRecipe.validation';
-import { ErrorMsg } from '@src/components/UI/ErrorMsg/ErrorMsg';
+import { IngredientsList } from '@src/pages/CreateRecipePage/IngredientsBlock/style';
 
-export const IngredientsBlock: React.FC<IIngredientsBlock> = ({ setIngredients, ingredients }) => {
-  const { dangerColor } = useTheme() as typeof THEMES.light;
+const IngredientsBlock: React.FC<IIngredientsBlockProps> = ({ ingredients, setIngredients }) => {
   const { t } = useTranslation();
-	
-  const addNewIngredient = () => {
-    setIngredients((state) => state.concat({
-      id: uuidv4(),
-      value: '',
-      touched: false,
-      errors: {},
-    }));
-  };
-	
+  
   useEffect(() => {
-    addNewIngredient();
+    setIngredients(() => {
+      return [{
+        value: '',
+        errors: {},
+        touched: false,
+        id: uuidv4(),
+      }];
+    });
   }, []);
-	
-  const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+  
+  const changeHandler = useCallback((value, id) => {
     setIngredients((state) => state.map((item) => {
-      if (item.id === e.target.id) {
+      if (item.id === id) {
         return {
           ...item,
-          value: e.target.value,
-          errors: createRecipeIngredientValidation(e.target.value),
+          value,
+          errors: createRecipeIngredientValidation(value),
           touched: true,
         };
       }
       return item;
     }));
-  };
-	
-  const changePositionUp = (index: number) => {
-    if (ingredients[index - 1]) {
-      const temp = ingredients[index - 1];
-      const newState = ingredients.slice(0, ingredients.length);
-      newState[index - 1] = newState[index];
-      newState[index] = temp;
-      setIngredients(() => newState);
+  }, []);
+  
+  const deleteHandler = useCallback((id: string) => {
+    setIngredients((prev) => prev.filter((item) => item.id !== id));
+  }, []);
+  
+  const upHandler = useCallback((index) => {
+    if (index > 0) {
+      setIngredients((prev) => {
+        const temp = prev[index - 1];
+        const newState = prev.slice(0, prev.length);
+        newState[index - 1] = newState[index];
+        newState[index] = temp;
+        return newState;
+      });
+      return true;
     }
-  };
-	
-  const changePositionDown = (index: number) => {
-    if (ingredients[index + 1]) {
-      const temp = ingredients[index + 1];
-      const newState = ingredients.slice(0, ingredients.length);
-      newState[index + 1] = newState[index];
-      newState[index] = temp;
-      setIngredients(() => newState);
-    }
-  };
-	
-  const deleteHandler = (id: string) => {
-    if (ingredients.length > 1) {
-      setIngredients((state) => state.filter((item) => item.id !== id));
-    }
-  };
-	
+    return false;
+  }, []);
+  
+  const downHandler = useCallback((index) => {
+    setIngredients((prev) => {
+      if (index < prev.length - 1) {
+        const temp = prev[index + 1];
+        const newState = prev.slice(0, prev.length);
+        newState[index + 1] = newState[index];
+        newState[index] = temp;
+        return newState;
+      }
+      return prev;
+    });
+  }, []);
+  
+  const addNewIngredient = useCallback(() => {
+    setIngredients((prev) => {
+      return [...prev, {
+        value: '',
+        errors: {},
+        touched: false,
+        id: uuidv4(),
+      }];
+    });
+  }, []);
+  
   return (
     <CreateRecipeBlock>
       <Title fz={18} fw={500} margin='0 0 20px'>{t('ingredients')}</Title>
       <Description>{t('ingredientsText')}</Description>
-      {ingredients.map((item, index) => {
-        const isValid = item.touched ? item.touched && !item.errors.ingredients : true;
-        
-        return (
-          <div key={item.id}>
-            <Title color={!isValid ? dangerColor : 'inherit'} fz={15}>{`${t('ingredient')} #${index + 1}`}</Title>
-            <IngredientsInputWrapper>
-              <IngredientsIconsWrapper>
-                <IngredientsOrderIcon className='icon-up' isDisabled={index === 0} onClick={() => changePositionUp(index)}/>
-                <IngredientsOrderIcon className='icon-down' isDisabled={index === ingredients.length - 1} onClick={() => changePositionDown(index)}/>
-              </IngredientsIconsWrapper>
-              <IngredientsInputElemWrapper>
-                <Input
-                  id={item.id}
-                  name='ingredient'
-                  value={item.value}
-                  onChange={(e) => changeHandler(e)}
-                  height='35px'
-                  margin='0'
-                  placeholder={`${t('ingredient')}`}
-                  isValid={isValid}
-                />
-              </IngredientsInputElemWrapper>
-              <IngredientsIcon
-                isDisabled={ingredients.length === 1}
-                className='icon-cancel'
-                onClick={() => deleteHandler(item.id)}
-              />
-            </IngredientsInputWrapper>
-            <ErrorMsg show={item.touched && !!item.errors.ingredients} margin='5px 0 0'>{item.errors.ingredients}</ErrorMsg>
-          </div>
-					
-        );
-      })}
+      <IngredientsList>
+        {ingredients.map((item, index) => {
+          return (
+            <IngredientItem
+              key={item.id}
+              isUpPossible={index === 0}
+              isDownPossible={index === ingredients.length - 1}
+              isDeletePossible={ingredients.length <= 1}
+              ingredient={item}
+              onChange={changeHandler}
+              index={index}
+              onDelete={deleteHandler}
+              onDown={downHandler}
+              onUp={upHandler}
+            />
+          );
+        })}
+      </IngredientsList>
       {ingredients.length < 20 && (
         <Button
-          clickHandler={() => addNewIngredient()}
+          clickHandler={addNewIngredient}
           margin='20px 0 0'
           text={t('addIngredient')}
         />
@@ -123,3 +112,5 @@ export const IngredientsBlock: React.FC<IIngredientsBlock> = ({ setIngredients, 
     </CreateRecipeBlock>
   );
 };
+
+export default memo(IngredientsBlock);

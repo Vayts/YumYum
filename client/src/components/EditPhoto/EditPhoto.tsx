@@ -1,14 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import AvatarEditor from 'react-avatar-editor';
-import { Button } from '@src/components/UI/Button/Button';
+import Button from '@src/components/UI/Button/Button';
 import { IEditPhoto } from '@src/components/EditPhoto/types';
 import { EditPhotoBackground, EditPhotoButtons, EditPhotoWrapper } from '@src/components/EditPhoto/style';
-import { Description } from '@src/components/UI/Description/Description';
+import Description from '@src/components/UI/Description/Description';
 import { getNotification } from '@src/notification/notifications';
 import { hideScrollbar, showScrollbar } from '@helpers/visual.helper';
 
-export const EditPhoto: React.FC<IEditPhoto> = ({ state, setState }) => {
+const EditPhoto: React.FC<IEditPhoto> = ({ state, setState }) => {
   const { photo, photoBlob, height, width, saveFunc, border, photoName } = state;
   const [isLoading, setLoading] = useState(false);
   const [scale, setScale] = useState(1.1);
@@ -82,7 +82,7 @@ export const EditPhoto: React.FC<IEditPhoto> = ({ state, setState }) => {
     <EditPhotoBackground>
       <EditPhotoWrapper width={width} border={border}>
         <div
-          onWheel={(e: React.WheelEvent<HTMLDivElement>) => onMouseWheel(e)}
+          onWheel={onMouseWheel}
         >
           <AvatarEditor
             ref={editor}
@@ -104,10 +104,12 @@ export const EditPhoto: React.FC<IEditPhoto> = ({ state, setState }) => {
           {t('editPhotoText')}
         </Description>
         <EditPhotoButtons>
-          <Button clickHandler={() => saveHandler()} text={t('savePicture')} width='35%'/>
-          <Button clickHandler={() => cancelHandler()} text={t('cancel')} styleType='transparent' width='35%'/>
+          <Button clickHandler={saveHandler} text={t('savePicture')} width='35%'/>
+          <Button clickHandler={cancelHandler} text={t('cancel')} styleType='transparent' width='35%'/>
         </EditPhotoButtons>
       </EditPhotoWrapper>
     </EditPhotoBackground>
   );
 };
+
+export default EditPhoto;

@@ -1,26 +1,25 @@
-import React, { ChangeEvent, useState } from 'react';
-import { FileUploader } from '@src/components/UI/FileUploader/FileUploader';
-import { TextArea } from '@src/components/UI/TextArea/TextArea';
-import {
-  ContentPhotoTextBlockImgHolder,
-  ContentPhotoTextBlockImgWrapper, ContentPhotoTextBlockInputsWrapper,
-  ContentPhotoTextBlockWrapper,
-} from '@src/pages/CreateRecipePage/ContentBlocks/ContentPhotoTextBlock/style';
-import { Input } from '@src/components/UI/Input/Input';
-import { IContentPhotoTextBlockProps } from '@src/pages/CreateRecipePage/ContentBlocks/ContentPhotoTextBlock/types';
+import React, { ChangeEvent, memo, useCallback, useState } from 'react';
+import { ICreateContentBlockWithPhotoProps } from '@src/pages/CreateRecipePage/ContentBlocks/types';
 import { useTranslation } from 'react-i18next';
+import { IEditPhotoState } from '@src/components/EditPhoto/types';
+import EditPhoto from '@src/components/EditPhoto/EditPhoto';
 import {
   ContentBlockControlsWrapper,
+  ContentBlockItem,
   ContentBlockRadio,
   ContentBlockRadioLabel,
-  ContentBlockRadioWrapper,
 } from '@src/pages/CreateRecipePage/ContentBlocks/style';
-import { IEditPhotoState } from '@src/components/EditPhoto/types';
-import { EditPhoto } from '@src/components/EditPhoto/EditPhoto';
-import { ErrorMsg } from '@src/components/UI/ErrorMsg/ErrorMsg';
-import { IPhotoTextContentBlock } from '@src/types/contentBlocks.types';
+import {
+  ContentPhotoTextBlockImgWrapper, ContentPhotoTextBlockInputsWrapper,
+  ContentPhotoTextBlockWrapper,
+} from '@src/pages/CreateRecipePage/ContentBlocks/CreatePhotoTextContentBlock/style';
+import FileUploader from '@src/components/UI/FileUploader/FileUploader';
+import Input from '@src/components/UI/Input/Input';
+import ErrorMsg from '@src/components/UI/ErrorMsg/ErrorMsg';
+import TextArea from '@src/components/UI/TextArea/TextArea';
+import Title from '@src/components/UI/Title/Title';
 
-export const ContentPhotoTextBlock: React.FC<IContentPhotoTextBlockProps> = ({ contentBlock, onChangeHandler }) => {
+const CreatePhotoTextContentBlock: React.FC<ICreateContentBlockWithPhotoProps> = ({ contentBlock, index, onChange, onPhotoSave }) => {
   const [editPhotoState, setEditPhoto] = useState<IEditPhotoState>({
     isOpen: false,
     photo: null,
@@ -31,32 +30,25 @@ export const ContentPhotoTextBlock: React.FC<IContentPhotoTextBlockProps> = ({ c
     saveFunc: null,
     photoName: contentBlock.id,
   });
-  const {
-    content,
-    id,
-    errors,
-    touched,
-  } = contentBlock;
-  const {
-    photoDescription,
-    photo,
-    photoPosition,
-    description,
-    title,
-  } = content as IPhotoTextContentBlock;
+  const { content, errors, type, id, touched } = contentBlock;
+  const { photo, photoDescription, description, title, photoPosition } = content;
   const { t } = useTranslation();
-    
+  
+  const changeHandler = useCallback((e) => {
+    onChange(e, id);
+  }, []);
+  
   const setPhotoHandler = (photo: any) => {
-    onChangeHandler('photo', photo, id);
+    onPhotoSave(photo, id);
   };
   
-  const openEditPhoto = (e: ChangeEvent<HTMLInputElement>) => {
+  const openEditPhoto = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     if (e.target && e.target.files && e.target.files[0]) {
       const photo = e.target.files[0];
       const photoBlob = URL.createObjectURL(photo);
-      setEditPhoto((state) => {
+      setEditPhoto((prev) => {
         return {
-          ...state,
+          ...prev,
           photo,
           photoBlob,
           isOpen: true,
@@ -65,10 +57,13 @@ export const ContentPhotoTextBlock: React.FC<IContentPhotoTextBlockProps> = ({ c
       return true;
     }
     return false;
-  };
-    
+  }, []);
+  
   return (
-    <>
+    <ContentBlockItem>
+      <Title fz={18} fw={500} margin='0 0 20px'>
+        {`${t('contentBlockNumber', { value: index + 1 })} - ${t(type)}`}
+      </Title>
       {editPhotoState.isOpen
         ? (
           <EditPhoto
@@ -77,44 +72,44 @@ export const ContentPhotoTextBlock: React.FC<IContentPhotoTextBlockProps> = ({ c
           />
         ) : null}
       <ContentBlockControlsWrapper>
-        <ContentBlockRadioWrapper>
+        <div>
           <ContentBlockRadio
             id={`contentBlock${id}PhotoPositionLeft`}
-            onChange={(e) => onChangeHandler('photoPosition', e.target.value, id)}
-            name={`contentBlock${id}PhotoPosition`}
+            onChange={changeHandler}
+            name="photoPosition"
             value="left"
             checked={photoPosition === 'left'}
           />
           <ContentBlockRadioLabel htmlFor={`contentBlock${id}PhotoPositionLeft`}>{t('photoLeft')}</ContentBlockRadioLabel>
-        </ContentBlockRadioWrapper>
-        <ContentBlockRadioWrapper>
+        </div>
+        <div>
           <ContentBlockRadio
             id={`contentBlock${id}PhotoPositionRight`}
-            onChange={(e) => onChangeHandler('photoPosition', e.target.value, id)}
-            name={`contentBlock${id}PhotoPosition`}
+            onChange={changeHandler}
+            name="photoPosition"
             value="right"
             checked={photoPosition === 'right'}
           />
           <ContentBlockRadioLabel htmlFor={`contentBlock${id}PhotoPositionRight`}>{t('photoRight')}</ContentBlockRadioLabel>
-        </ContentBlockRadioWrapper>
+        </div>
       </ContentBlockControlsWrapper>
       <ContentPhotoTextBlockWrapper>
-        <ContentPhotoTextBlockImgWrapper photoPosition={photoPosition}>
-          <ContentPhotoTextBlockImgHolder>
-            <FileUploader
-              id={`contentBlock${id}Photo`}
-              onChange={(e) => openEditPhoto(e)}
-              name="photo"
-              value={photo ? URL.createObjectURL(photo) : null}
-              margin="0 0 1px"
-            />
-          </ContentPhotoTextBlockImgHolder>
+        <ContentPhotoTextBlockImgWrapper photoPosition={photoPosition || 'right'}>
+          <FileUploader
+            id={`contentBlock${id}Photo`}
+            onChange={openEditPhoto}
+            name="photo"
+            value={photo ? URL.createObjectURL(photo) : null}
+            margin="0 0 1px"
+            height='400px'
+            width='400px'
+          />
           <Input
             id={`contentBlock${id}photoDescription`}
             name="photoDescription"
             value={photoDescription}
             margin="15px 0 0"
-            onChange={(e) => onChangeHandler(e.target.name, e.target.value, id)}
+            onChange={changeHandler}
             placeholder={`${t('smallPhotoDescription')} (${t('optionalІSmall')})`}
             fz={16}
             padding="10px"
@@ -128,13 +123,13 @@ export const ContentPhotoTextBlock: React.FC<IContentPhotoTextBlockProps> = ({ c
             {errors.photoDescription}
           </ErrorMsg>
         </ContentPhotoTextBlockImgWrapper>
-        <ContentPhotoTextBlockInputsWrapper photoPosition={photoPosition}>
+        <ContentPhotoTextBlockInputsWrapper photoPosition={photoPosition || 'right'}>
           <Input
             id={`contentBlock${id}title`}
             name="title"
             value={title}
             margin="0"
-            onChange={(e) => onChangeHandler(e.target.name, e.target.value, id)}
+            onChange={changeHandler}
             placeholder={`${t('title')} (${t('optionalІSmall')})`}
             fz={16}
             max={100}
@@ -144,7 +139,7 @@ export const ContentPhotoTextBlock: React.FC<IContentPhotoTextBlockProps> = ({ c
           <ErrorMsg show={touched.title && !!errors.title} margin="5px 0 0">{errors.title}</ErrorMsg>
           <TextArea
             value={description}
-            onChange={(e) => onChangeHandler(e.target.name, e.target.value, id)}
+            onChange={changeHandler}
             name="description"
             id={`contentBlock${id}Description`}
             height="100%"
@@ -159,6 +154,8 @@ export const ContentPhotoTextBlock: React.FC<IContentPhotoTextBlockProps> = ({ c
           {/*<ErrorMsg show={touched.description && !!errors.description} margin='5px 0 0'>{errors.description}</ErrorMsg>*/}
         </ContentPhotoTextBlockInputsWrapper>
       </ContentPhotoTextBlockWrapper>
-    </>
+    </ContentBlockItem>
   );
 };
+
+export default memo(CreatePhotoTextContentBlock);

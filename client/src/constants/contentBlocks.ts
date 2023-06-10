@@ -1,4 +1,4 @@
-import { IContentFiller } from '@src/types/contentBlocks.types';
+import { IContentFiller } from '@src/types/createRecipe.types';
 
 export const CONTENT_BLOCK_TYPES = {
   PHOTO: 'photo',
@@ -18,7 +18,7 @@ export const CONTENT_BLOCKS: IContentFiller[] = [
     type: CONTENT_BLOCK_TYPES.PHOTO_TEXT,
     content: {
       photoPosition: 'left',
-      photo: null,
+      photo: undefined,
       photoDescription: '',
       title: '',
       description: '',

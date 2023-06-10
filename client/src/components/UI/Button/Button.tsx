@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Loader } from '@src/components/Loader/Loader';
 import { IButton } from '@src/components/UI/Button/types';
 import { ButtonContent, ButtonIcon, ButtonItem, ButtonText } from '@src/components/UI/Button/style';
 
-export const Button: React.FC<IButton> = (props) => {
+const Button: React.FC<IButton> = (props) => {
   const {
     margin,
     padding,
@@ -43,3 +43,5 @@ export const Button: React.FC<IButton> = (props) => {
     </ButtonItem>
   );
 };
+
+export default memo(Button);
