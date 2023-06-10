@@ -1,8 +1,8 @@
-import React, { SetStateAction } from 'react';
-import { IContentBlock } from '@src/types/contentBlocks.types';
+import React from 'react';
+import { ICreateRecipeContentBlock } from '@src/types/createRecipe.types';
 
 export interface IContentBlockMenu {
 	id: string,
 	type: string,
-	setContentBlocks: React.Dispatch<SetStateAction<IContentBlock[]>>,
+	setContentBlocks: React.Dispatch<(state: ICreateRecipeContentBlock[]) => ICreateRecipeContentBlock[]>,
 }
