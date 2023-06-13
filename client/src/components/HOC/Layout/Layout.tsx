@@ -3,7 +3,7 @@ import { LayoutMainContent, LayoutWrapper } from '@hoc/Layout/style';
 import { Outlet } from 'react-router-dom';
 import { Header } from '@hoc/Header/Header';
 
-export const Layout: React.FC = () => {
+const Layout: React.FC = () => {
   return (
     <LayoutWrapper>
       <Header/>
@@ -13,3 +13,5 @@ export const Layout: React.FC = () => {
     </LayoutWrapper>
   );
 };
+
+export default Layout;

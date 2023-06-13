@@ -12,7 +12,11 @@ export const store = configureStore({
     modal: modalSlice.reducer,
     createRecipe: createRecipeSlice.reducer,
   },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+    serializableCheck: {
+      ignoredActions: ['ADD_RECIPE_REQUEST'],
+    },
+  }).concat(sagaMiddleware),
 });
 
 sagaMiddleware.run(rootSaga);

@@ -1,13 +1,20 @@
 import { getPhotoFullName } from '@src/validation/app.helper';
-import { ICreateRecipeContentBlock, ICreateRecipeIngredient, ICreateRecipeMain } from '@src/types/createRecipe.types';
+import {
+  ICreateRecipeContentBlock,
+  ICreateRecipeDto,
+  ICreateRecipeIngredient,
+  ICreateRecipeMain,
+} from '@src/types/createRecipe.types';
 
 // eslint-disable-next-line max-len
 export function getCreateRecipeDto(  
   mainInfo: ICreateRecipeMain,
   ingredients: ICreateRecipeIngredient[],
   contentBlocks: ICreateRecipeContentBlock[],
-): any {
-  const result: any = {
+): ICreateRecipeDto {
+  console.log(mainInfo);
+  
+  const result: ICreateRecipeDto = {
     photos: [mainInfo.photo as File],
     mainInfo: {
       title: mainInfo.title,
@@ -20,8 +27,8 @@ export function getCreateRecipeDto(
   
   ingredients.forEach((item) => {
     result.ingredients.push({
-      id: item.id,
-      value: item.value,
+      id: item.id as string,
+      value: item.value as string,
     });
   });
   
@@ -42,10 +49,12 @@ export function getCreateRecipeDto(
         type: item.type,
         content: {
           ...item.content,
+          photo: null,
         },
       });
     }
   });
-
+  
+  console.log(result);
   return result;
 }

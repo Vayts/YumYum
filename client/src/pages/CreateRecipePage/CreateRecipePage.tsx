@@ -9,6 +9,9 @@ import IngredientsBlock from '@src/pages/CreateRecipePage/IngredientsBlock/Ingre
 import ContentBlocks from '@src/pages/CreateRecipePage/ContentBlocks/ContentBlocks';
 import { createRecipeFullFormValidate } from '@src/validation/createRecipe.validation';
 import { getCreateRecipeDto } from '@helpers/createRecipe.helper';
+import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@src/hooks/hooks';
+import { addRecipeRequest } from '@src/store/createRecipe/actions';
 
 const mainInfoInitial: ICreateRecipeMain = {
   title: '',
@@ -22,12 +25,23 @@ const CreateRecipePage: React.FC = () => {
   const [mainInfo, setMainInfo] = useState<ICreateRecipeMain>(mainInfoInitial);
   const [ingredients, setIngredients] = useState<ICreateRecipeIngredient[]>([]);
   const [contentBlocks, setContentBlocks] = useState<ICreateRecipeContentBlock[]>([]);
+  const dispatch = useAppDispatch();
   const { t } = useTranslation();
   
   const submitHandler = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     if (createRecipeFullFormValidate(mainInfo, ingredients, contentBlocks)) {
-      getCreateRecipeDto(mainInfo, ingredients, contentBlocks);
+      const values = getCreateRecipeDto(mainInfo, ingredients, contentBlocks);
+      
+      const formData = new FormData();
+      values.photos.forEach((item) => {
+        formData.append('photos', item);
+      });
+      formData.append('mainInfo', JSON.stringify(values.mainInfo));
+      formData.append('contentBlocks', JSON.stringify(values.contentBlocks));
+      formData.append('ingredients', JSON.stringify(values.ingredients));
+      
+      dispatch(addRecipeRequest(formData));
     }
   };
   

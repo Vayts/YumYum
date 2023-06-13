@@ -4,4 +4,7 @@ export const ROUTES = {
     register: '/auth/register',
     refresh: '/auth/refresh',
   },
+  recipe: {
+    create: '/create_recipe/add',
+  },
 };

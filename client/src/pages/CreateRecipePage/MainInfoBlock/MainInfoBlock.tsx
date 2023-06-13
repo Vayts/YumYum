@@ -26,6 +26,7 @@ const editPhotoInitial = {
 const MainInfoBlock: React.FC<IMainInfoBlockProps> = ({ mainInfo, setMainInfo }) => {
   const { title, errors, touched, description, photo } = mainInfo;
   const [editPhotoState, setEditPhoto] = useState<IEditPhotoState>(editPhotoInitial);
+  const [photoBlob, setPhotoBlob] = useState<null | string>(null);
   const { t } = useTranslation();
   
   const changeHandler = useCallback((e) => {
@@ -52,6 +53,7 @@ const MainInfoBlock: React.FC<IMainInfoBlockProps> = ({ mainInfo, setMainInfo })
         photo,
       };
     });
+    setPhotoBlob(URL.createObjectURL(photo));
   }, []);
   
   const openEditPhoto = useCallback((e: ChangeEvent<HTMLInputElement>) => {
@@ -85,7 +87,7 @@ const MainInfoBlock: React.FC<IMainInfoBlockProps> = ({ mainInfo, setMainInfo })
         id='mainPhoto'
         onChange={openEditPhoto}
         name='mainPhoto'
-        value={photo ? URL.createObjectURL(photo) : null}
+        value={photoBlob}
         margin='0 0 20px'
         height='281px'
         width="450px"

@@ -10,11 +10,6 @@ export const ContentPhotoTextBlockImgWrapper = styled.div<ICreateContentPhotoTex
   order: ${({ photoPosition }) => (photoPosition === 'right' ? 2 : 1)};
 `;
 
-export const ContentPhotoTextBlockImgHolder = styled.div`
-  width: 400px;
-  height: 400px;
-`;
-
 export const ContentPhotoTextBlockInputsWrapper = styled.div<ICreateContentPhotoTextBlockStyle>`
   flex-grow: 1;
   display: flex;
