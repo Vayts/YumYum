@@ -31,7 +31,8 @@ const CreatePhotoTextContentBlock: React.FC<ICreateContentBlockWithPhotoProps> =
     photoName: contentBlock.id,
   });
   const { content, errors, type, id, touched } = contentBlock;
-  const { photo, photoDescription, description, title, photoPosition } = content;
+  const [photoBlob, setPhotoBlob] = useState<null | string>(null);
+  const { photoDescription, description, title, photoPosition } = content;
   const { t } = useTranslation();
   
   const changeHandler = useCallback((e) => {
@@ -40,6 +41,7 @@ const CreatePhotoTextContentBlock: React.FC<ICreateContentBlockWithPhotoProps> =
   
   const setPhotoHandler = (photo: any) => {
     onPhotoSave(photo, id);
+    setPhotoBlob(URL.createObjectURL(photo));
   };
   
   const openEditPhoto = useCallback((e: ChangeEvent<HTMLInputElement>) => {
@@ -99,7 +101,7 @@ const CreatePhotoTextContentBlock: React.FC<ICreateContentBlockWithPhotoProps> =
             id={`contentBlock${id}Photo`}
             onChange={openEditPhoto}
             name="photo"
-            value={photo ? URL.createObjectURL(photo) : null}
+            value={photoBlob}
             margin="0 0 1px"
             height='400px'
             width='400px'

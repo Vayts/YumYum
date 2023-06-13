@@ -11,6 +11,7 @@ import { contentBlockValidation } from '@src/validation/createRecipe.validation'
 import CreatePhotoTextContentBlock from '@src/pages/CreateRecipePage/ContentBlocks/CreatePhotoTextContentBlock/CreatePhotoTextContentBlock';
 import { Menu } from '@src/components/UI/Menu/Menu';
 import { ContentBlockMenu } from '@src/components/UI/Menu/ContentBlockMenu/ContentBlockMenu';
+import CreatePhotoContentBlock from '@src/pages/CreateRecipePage/ContentBlocks/CreatePhotoContentBlock/CreatePhotoContentBlock';
 
 const ContentBlocks: React.FC<IContentBlocksProps> = ({ contentBlocks, setContentBlocks }) => {
   const [isModalOpen, setModalOpen] = useState(false);
@@ -97,7 +98,12 @@ const ContentBlocks: React.FC<IContentBlocksProps> = ({ contentBlocks, setConten
       );
     case CONTENT_BLOCK_TYPES.PHOTO:
       return (
-        <></>
+        <CreatePhotoContentBlock
+          index={index}
+          contentBlock={contentBlock}
+          onChange={changeHandler}
+          onPhotoSave={savePhotoHandler}
+        />
       );
     default:
       return null;
@@ -114,7 +120,6 @@ const ContentBlocks: React.FC<IContentBlocksProps> = ({ contentBlocks, setConten
         <ContentBlockModal
           setModalOpen={setModalOpen}
           setContentBlocks={setContentBlocks}
-          contentBlocks={contentBlocks}
         />
       )}
       <ContentBlocksList>

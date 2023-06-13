@@ -26,3 +26,33 @@ export interface ICreateRecipeContentBlock {
     description: string,
   }
 }
+
+export interface ICreateRecipeDto {
+  photos: File[],
+  mainInfo: ICreateRecipeMainDto,
+  ingredients: ICreateRecipeIngredientDto[],
+  contentBlocks: IContentBlockDto[],
+}
+
+export interface IContentBlockDto {
+  id: string,
+  type: string,
+  content: {
+    photo?: string | null,
+    photoPosition?: 'right' | 'left',
+    photoDescription: string,
+    title: string,
+    description: string,
+  }
+}
+
+export interface ICreateRecipeMainDto {
+  title: string,
+  description: string,
+  photo: string,
+}
+
+export interface ICreateRecipeIngredientDto {
+  value: string,
+  id: string,
+}

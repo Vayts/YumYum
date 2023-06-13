@@ -31,7 +31,7 @@
         "./src/helpers/*"
       ],
       "@hoc/*": [
-        "./src/components/hoc/*"
+        "./src/components/HOC/*"
       ],
       "@src/*": [
         "./src/*"
